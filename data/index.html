@@ -1,0 +1,76 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>BIS V13 UI Mockup</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<h2>BIS V13 - Behavioral Composition</h2>
+<div class="control-row">
+  <button class="default" id="playBtn" onclick="s('PLAY')">PLAY</button>
+  <button class="default" onclick="s('STOP')">STOP</button>
+</div>
+<div class="control-row">
+  BPM <span id=bpmv class=value>120</span>
+  <input id=bpm type=range min=20 max=240 value=120 oninput="bpmv.textContent=this.value">
+</div>
+<div class="control-row">
+  ONTIME <span id=ontv class=value>50</span>ms
+  <input id=ont type=range min=10 max=1000 value=50 oninput="ontv.textContent=this.value">
+</div>
+<div class="control-row">
+  DRUNK <span id=drv class=value>0</span>%
+  <input id=dr type=range min=0 max=100 value=0 oninput="drv.textContent=this.value">
+</div>
+<div class="control-row">
+  PROB <span id=prv class=value>100</span>%
+  <input id=pr type=range min=0 max=100 value=100 oninput="prv.textContent=this.value">
+</div>
+<hr>
+<div class="control-row" style="background:#1a1a1a;padding:8px;border-radius:3px">
+  <strong>Range Navigation:</strong><br><br>
+  STEPS <span id=stv class=value>25</span>
+  <input id=st type=range min=1 max=25 value=25><br><br>
+  SCRUB <span id=scv class=value>0</span>
+  <input id=sc type=range min=0 max=24 value=0><br><br>
+  <div class='rangebar'><div class='rangehighlight' id='rh'></div></div>
+  <span id=rng>RANGE=0-24</span>
+</div>
+<hr>
+<div class="control-row">
+  <strong>Banks:</strong><br><br>
+  <div class="bank-section">
+    <div class="record-stop-stack">
+      <button class="record" id="recordBtn" onclick="s('RECORD')">RECORD</button>
+      <button class="stop-row" onclick="s('STOP')">STOP</button>
+    </div>
+
+    <div class="bank-column">
+      <div class="bank-row" id="bankgrid"></div>
+      <div class="bank-row"></div>
+    </div>
+
+    <div class="overwrite-wrap">
+      <button class="overwrite" id="overwriteBtn" onclick="s('OVERWRITE')">OVERWRITE</button>
+    </div>
+  </div>
+</div>
+<hr>
+<div class="control-row">
+  <strong>Output Status:</strong><br><br>
+  <div id='outs'></div>
+</div>
+<hr>
+<div class="control-row">
+  <strong>Sequencer Grid:</strong><br><br>
+  <div id=g></div>
+</div>
+<hr>
+<div class="control-row">
+  <strong>Console:</strong><br><br>
+  <textarea id='console' readonly></textarea>
+</div>
+<script src="/app.js"></script>
+</body>
+</html>

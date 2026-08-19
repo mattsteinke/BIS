@@ -1,0 +1,185 @@
+body {
+  background: #111;
+  color: #fff;
+  font-family: Arial, sans-serif;
+  margin: 10px;
+  max-width: 900px;
+}
+h2 { margin: 6px 6px 6px 6px; font-size: 16px; }
+.control-row {
+  margin: 8px 8px 8px ;
+  padding: 5px 0px 0px 0px;
+}
+button {
+  padding: 8px 16px;
+  margin: 4px;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background 0.2s;
+}
+button:disabled { opacity: 0.35; cursor: not-allowed; }
+button.default { background: #444; color: #fff; }
+button.default:hover:not(:disabled) { background: #666; }
+
+/* record & stop buttons – same width, vertical stack */
+.record-stop-stack {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 6px;
+  width: 82px;
+}
+
+.record-stop-stack button {
+  width: 82px;
+  margin: 0;
+  box-sizing: border-box;
+  height: 40px;
+  font-size: 10px;
+  background: #444;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+button.record.active {
+  background: #ff0000;
+  color: #fff;
+  box-shadow: 0 0 8px #ff0000;
+}
+button.record.active:hover { background: #cc0000; }
+button.record:hover:not(:disabled) { background: #666; }
+button.record.active:hover { background: #cc0000; }
+
+button.bank {
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  margin: 2px;
+  background: #333;
+  color: #fff;
+  font-size: 18px;
+}
+button.bank.empty { background: #222; }
+button.bank.stored { background: #ff8800; }
+button.bank.selected { background: #ffff00; color: #000; }
+button.bank.recording { background: #ff0000; }
+button.bank.overwrite-target { background: #aa00ff; color: #fff; box-shadow: 0 0 8px #aa00ff; }
+
+button.overwrite { background: #444; color: #fff; }
+button.overwrite.active { background: #aa00ff; color: #fff; box-shadow: 0 0 8px #aa00ff; }
+
+.cell {
+  width: 20px;
+  height: 20px;
+  display: inline-block;
+  margin: 1px;
+  border: 1px solid #333;
+  background: #222;
+  cursor: pointer;
+  position: relative;
+  z-index: 2;
+  transition: opacity 0.08s, background 0.08s;
+  opacity: 0.32;
+}
+.cell.inrange { opacity: 1; }
+.cell.active { background: #ff8800 !important; }
+.cell.playhead {
+  outline: 3px solid #ffff00;
+  box-shadow: 0 0 6px #ffff00;
+  z-index: 3;
+  opacity: 1;
+}
+.value {
+  display: inline-block;
+  width: 50px;
+  text-align: right;
+  font-weight: bold;
+}
+.outled {
+  width: 16px;
+  height: 16px;
+  border: 1px solid #555;
+  background: #111;
+  display: inline-block;
+  margin: 2px;
+  border-radius: 2px;
+}
+.outled.active {
+  background: #00ff00;
+  box-shadow: 0 0 5px #00ff00;
+}
+#console {
+  width: 100%;
+  height: 150px;
+  background: #000;
+  color: #0f0;
+  font-family: monospace;
+  font-size: 11px;
+  overflow-y: auto;
+  resize: vertical;
+}
+input[type=range] {
+  width: 200px;
+  vertical-align: middle;
+}
+input[type=range]:disabled { opacity: 0.4; cursor: not-allowed; }
+.grid-row {
+  display: flex;
+  margin: 2px 0;
+  position: relative;
+  z-index: 2;
+}
+.rangebar {
+  width: 500px;
+  height: 16px;
+  background: #1a1a1a;
+  border: 2px solid #555;
+  position: relative;
+  margin: 8px 0;
+  border-radius: 3px;
+}
+.rangehighlight {
+  position: absolute;
+  background: rgba(255, 136, 0, 0.6);
+  height: 100%;
+  border: 1px solid #ff8800;
+  box-shadow: inset 0 0 3px rgba(255, 136, 0, 0.8);
+  transition: left 0.1s linear, width 0.1s linear;
+}
+#rng { font-size: 12px; color: #ff8800; font-weight: bold; }
+.bank-section {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.bank-column {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.bank-row {
+  display: grid;
+  grid-template-columns: repeat(8, 40px);
+  gap: 3px;
+}
+
+.overwrite-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 83px;
+  min-width: 100px;
+}
+
+.overwrite-wrap button {
+  margin: 0;
+  height: 40px;
+}
+hr { border-color: #333; }

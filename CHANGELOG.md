@@ -10,32 +10,56 @@ The format is inspired by Keep a Changelog and uses semantic versioning where pr
 
 ## Planned
 
-### Persistence
-- LittleFS storage for banks
-- Automatic bank restore on boot
-- Persistent settings framework
+### V15
+- Preferences panel
+- Persistent user settings
+- Original BIS Composer-inspired configuration workflow
+- Additional UI refinement
 
-### UI
-- Loop-start bank flash indicator
-- Additional browser interface cleanup
-- Improved performer feedback
-
-### Sequencer
-- BPM range expanded to 5–400 BPM
-- Minimum pulse on-time reduced to 5 ms
+### Future
+- TFT Animation Module
+- Web MIDI
+- Extended performance and composition tools
 
 ---
 
-# [v14.0] - Planned
+# [v14.0]
 
-## Added
-- LittleFS persistent bank storage
-- Automatic bank restoration at startup
+## Changed
+- Web UI moved out of embedded firmware source
+- Removed monolithic `web_page.h`
+- Browser application split into:
+  - `data/index.html`
+  - `data/style.css`
+  - `data/app.js`
+- Browser assets now served from LittleFS
 
-## Goals
-- Preserve all bank data between power cycles
-- Preserve recorded parameter performances
-- Establish foundation for future settings persistence
+## Improved
+- Clear separation between firmware and browser application
+- Smaller and more maintainable firmware codebase
+- Faster browser UI iteration
+- Independent firmware and UI deployment workflows
+
+## Preserved
+- Existing WebSocket protocol
+  - `CFG:`
+  - `RNG:`
+  - `G:`
+  - `P:`
+  - `BANKS:`
+  - `OUT:`
+  - `LOG:`
+  - `ANIM:`
+- Sequencer behavior
+- Bank behavior
+- Playback behavior
+- Transport behavior
+- Persistence behavior
+
+## Notes
+This release introduces no intended user-visible functional changes.
+
+V14 is an architectural cleanup release focused on decoupling the browser interface from firmware while preserving all existing behavior.
 
 ---
 
@@ -78,21 +102,27 @@ The format is inspired by Keep a Changelog and uses semantic versioning where pr
 
 # Version Roadmap
 
-## v14
-Persistence and reliability
-
-- LittleFS bank storage
-- Settings storage foundation
-- Improved loop feedback
-- Expanded performance ranges
-
 ## v15
-Composition infrastructure
+Preferences and configuration
 
-- Behavior framework
-- Gesture management
-- Scene system
-- Score system
+- Preferences panel
+- Persistent settings
+- UI workflow improvements
+- Composer-inspired configuration tools
+
+## v16
+Visualization
+
+- TFT Animation Module
+- Enhanced visual feedback
+- Animation development tools
+
+## v17
+Performance Integration
+
+- Web MIDI
+- External control integration
+- Expanded performance workflows
 
 ## Future
 Runtime architecture evolution

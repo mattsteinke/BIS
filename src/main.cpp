@@ -1,11 +1,11 @@
 #include <Arduino.h>
+#include <LittleFS.h>
 #include <WiFi.h>
 #include "bis_banks.h"
 #include "bis_scheduler.h"
 #include "bis_state.h"
 #include "bis_web.h"
 #include "config.h"
-#include "web_page.h"
 
 void setup() {
   Serial.begin(115200);
@@ -30,7 +30,43 @@ void setup() {
   WiFi.softAP("BIS-ESP32", "harmonicbrain");
 
   server.on("/", []() {
-    server.send_P(200, "text/html", PAGE_HTML);
+    if (server.method() != HTTP_GET) {
+      server.send(405, "text/plain", "Method Not Allowed");
+      return;
+    }
+    File file = LittleFS.open("/index.html", FILE_READ);
+    if (!file) {
+      server.send(500, "text/plain", "Missing /index.html");
+      return;
+    }
+    server.streamFile(file, "text/html");
+    file.close();
+  });
+  server.on("/style.css", []() {
+    if (server.method() != HTTP_GET) {
+      server.send(405, "text/plain", "Method Not Allowed");
+      return;
+    }
+    File file = LittleFS.open("/style.css", FILE_READ);
+    if (!file) {
+      server.send(500, "text/plain", "Missing /style.css");
+      return;
+    }
+    server.streamFile(file, "text/css");
+    file.close();
+  });
+  server.on("/app.js", []() {
+    if (server.method() != HTTP_GET) {
+      server.send(405, "text/plain", "Method Not Allowed");
+      return;
+    }
+    File file = LittleFS.open("/app.js", FILE_READ);
+    if (!file) {
+      server.send(500, "text/plain", "Missing /app.js");
+      return;
+    }
+    server.streamFile(file, "application/javascript");
+    file.close();
   });
   server.begin();
 

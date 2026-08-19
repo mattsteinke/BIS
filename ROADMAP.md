@@ -2,13 +2,14 @@
 
 This document tracks planned development for the Behavioral Instrument System (BIS).
 
-The goal is to prioritize practical improvements that make BIS more reliable, usable, and maintainable while gradually evolving toward the long-term BIS architecture.
+The goal is to prioritize practical improvements that make BIS more reliable,
+usable, and maintainable while gradually evolving toward the long-term BIS architecture.
 
 ---
 
 # Current Stable Version
 
-## v13
+## V14
 
 Implemented:
 
@@ -23,141 +24,97 @@ Implemented:
 - Probability control
 - Drunk-walk sequencing
 - RGB status feedback
+- Persistent bank storage
+- Browser state synchronization
+- LittleFS web hosting
+- Separated HTML / CSS / JavaScript architecture
 
 ---
 
 # Next Release
 
-# v14.0
+## V15
 
-## Persistent Memory
-
-Priority: High
-
-Goal:
-
-Banks survive power cycles.
-
-Features:
-
-- LittleFS integration
-- Save all 16 banks
-- Save grid state
-- Save parameter history
-- Save bank duration
-- Restore banks during startup
-
-Success Criteria:
-
-- Power cycle does not erase stored banks.
-- Existing workflow remains unchanged.
-- Flash wear minimized.
-
----
-
-# v14.1
-
-## Loop Feedback
-
-Priority: Medium
-
-Goal:
-
-Provide performer feedback when the sequencer returns to the beginning of its loop.
-
-Features:
-
-- Active bank flashes green at loop start.
-- Returns to yellow after flash.
-
-Success Criteria:
-
-- Clear visual loop timing feedback.
-- No impact on sequencing behavior.
-
----
-
-## Expanded BPM Range
-
-Priority: Medium
-
-Goal:
-
-Support slower and faster performances.
-
-New Limits:
-
-- Minimum BPM: 5
-- Maximum BPM: 400
-
-Success Criteria:
-
-- UI updated.
-- Firmware validation updated.
-- Timing remains stable.
-
----
-
-## Expanded On-Time Range
-
-Priority: Medium
-
-Goal:
-
-Support shorter trigger pulses.
-
-New Limits:
-
-- Minimum on-time: 5 ms
-
-Success Criteria:
-
-- UI updated.
-- Firmware validation updated.
-- Existing behavior preserved.
-
----
-
-# v14.2
-
-## Settings Persistence
+### Preferences System
 
 Priority: High
 
 Goal:
 
-System settings survive power cycles.
+Provide a persistent configuration system inspired by the original BIS Composer workflow.
 
-Store:
+Features:
 
-- BPM
-- OnTime
-- Probability
-- Drunk
-- Steps
-- Scrub
-- Last selected bank
+- Preferences panel
+- Persistent user settings
+- Startup configuration
+- User-adjustable defaults
+- Settings management UI
 
 Success Criteria:
 
-- Settings restored automatically at boot.
-- Independent of bank storage.
+- Settings survive reboot
+- Settings remain independent from banks
+- Existing workflow remains unchanged
+
+---
+
+### Performance Feedback
+
+Priority: Medium
+
+Goal:
+
+Improve performer awareness of timing and system state.
+
+Features:
+
+- Loop-start visual indicator
+- Active bank feedback improvements
+- Enhanced visual status monitoring
+
+Success Criteria:
+
+- Clear loop timing feedback
+- No impact on sequencing behavior
+
+---
+
+### Expanded Performance Range
+
+Priority: Medium
+
+Goal:
+
+Support a wider range of installation and performance behaviors.
+
+Features:
+
+- BPM range: 5–400
+- Minimum pulse on-time: 5 ms
+
+Success Criteria:
+
+- Firmware validation updated
+- Browser UI updated
+- Existing behavior preserved
 
 ---
 
 # Future Releases
 
-## Browser Composer Foundation
+## Browser Composer
 
 Planned
 
 Potential Features:
 
-- Modular UI architecture
-- Separate HTML / CSS / JavaScript files
-- Improved mobile usability
-- Configuration pages
+- Preferences pages
 - Diagnostics pages
+- Preset management
+- Mobile optimization
+- Alternate performance views
+- Enhanced editing workflows
 
 ---
 
@@ -207,6 +164,18 @@ Potential Features:
 - Voice abstraction
 - Capability mapping
 - Calibration system
+
+---
+
+# Long-Term Architecture
+
+Future runtime evolution:
+
+- Voice Manager
+- Routing Engine
+- Parameter Engine
+- Browser Composer
+- Extended performance systems
 
 ---
 

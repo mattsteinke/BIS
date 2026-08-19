@@ -103,6 +103,12 @@ Upload:
 platformio run -t upload
 ```
 
+Upload filesystem image (LittleFS web app files in [data/](/Users/matthewsteinke/Documents/PlatformIO/Projects/BIS/data)):
+
+```bash
+platformio run -t uploadfs
+```
+
 Monitor:
 
 ```bash
@@ -128,23 +134,8 @@ platformio device monitor
 Current Stable Version:
 
 ```text
-v13
+v14
 ```
-
-Recent Improvements:
-
-- Multi-file firmware architecture
-- ESP32-S3 PlatformIO migration
-- Browser UI refinement
-- Parameter playback looping fix
-
-Planned for v14:
-
-- LittleFS persistent bank storage
-- Persistent settings
-- Loop-start visual feedback
-- Expanded BPM range
-- Expanded pulse timing range
 
 ---
 
