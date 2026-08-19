@@ -11,3 +11,6 @@ void getAnimatedParams(uint16_t playbackMs, uint16_t& outBpm, uint16_t& outOntim
 void recallBank(uint8_t bankId);
 void syncBankStatus();
 void sendAnimatedParams();
+void initBankStorage();
+void loadBanksFromStorage();
+void reportFilesystemStatus();

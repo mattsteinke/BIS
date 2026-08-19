@@ -20,6 +20,9 @@ uint16_t lastRecordedParamMs = 0;
 bool isBankPlaying = false;
 unsigned long bankPlaybackStart = 0;
 
+bool overwriteMode = false;
+uint8_t overwriteTargetBank = 255;
+
 OutputPulse outputs[TRACKS];
 
 bool rgbActive = false;

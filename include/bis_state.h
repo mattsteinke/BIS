@@ -22,6 +22,9 @@ extern uint16_t lastRecordedParamMs;
 extern bool isBankPlaying;
 extern unsigned long bankPlaybackStart;
 
+extern bool overwriteMode;
+extern uint8_t overwriteTargetBank;
+
 extern OutputPulse outputs[TRACKS];
 
 extern bool rgbActive;

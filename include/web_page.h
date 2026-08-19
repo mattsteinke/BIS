@@ -36,21 +36,26 @@ const char PAGE_HTML[] PROGMEM = R"rawliteral(
     .record-stop-stack {
       display: flex;
       flex-direction: column;
+      justify-content: center;
       gap: 6px;
-      width: 82px;          /* fixed width to match record button */
+      width: 82px;
     }
+
     .record-stop-stack button {
-      width: 100%;
+      width: 82px;
       margin: 0;
       box-sizing: border-box;
       height: 40px;
       font-size: 10px;
       background: #444;
       color: #fff;
-      vertical-align: top;
-      
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
     }
-    button.record.active {
+
+button.record.active {
       background: #ff0000;
       color: #fff;
       box-shadow: 0 0 8px #ff0000;
@@ -72,6 +77,10 @@ const char PAGE_HTML[] PROGMEM = R"rawliteral(
     button.bank.stored { background: #ff8800; }
     button.bank.selected { background: #ffff00; color: #000; }
     button.bank.recording { background: #ff0000; }
+    button.bank.overwrite-target { background: #aa00ff; color: #fff; box-shadow: 0 0 8px #aa00ff; }
+
+    button.overwrite { background: #444; color: #fff; }
+    button.overwrite.active { background: #aa00ff; color: #fff; box-shadow: 0 0 8px #aa00ff; }
 
     .cell {
       width: 20px;
@@ -154,18 +163,33 @@ const char PAGE_HTML[] PROGMEM = R"rawliteral(
     #rng { font-size: 12px; color: #ff8800; font-weight: bold; }
     .bank-section {
       display: flex;
-      align-items: flex-start;
+      align-items: center;
       gap: 18px;
     }
+
     .bank-column {
       display: flex;
       flex-direction: column;
       gap: 5px;
     }
+
     .bank-row {
       display: grid;
       grid-template-columns: repeat(8, 40px);
       gap: 3px;
+    }
+
+    .overwrite-wrap {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 83px;
+      min-width: 100px;
+    }
+
+    .overwrite-wrap button {
+      margin: 0;
+      height: 40px;
     }
     hr { border-color: #333; }
   </style>
@@ -206,14 +230,18 @@ const char PAGE_HTML[] PROGMEM = R"rawliteral(
 <div class="control-row">
   <strong>Banks:</strong><br><br>
   <div class="bank-section">
-    <!-- record + stop stacked, same width -->
     <div class="record-stop-stack">
       <button class="record" id="recordBtn" onclick="s('RECORD')">RECORD</button>
       <button class="stop-row" onclick="s('STOP')">STOP</button>
     </div>
+
     <div class="bank-column">
       <div class="bank-row" id="bankgrid"></div>
-      <div class="bank-row"></div> <!-- placeholder for spacing -->
+      <div class="bank-row"></div>
+    </div>
+
+    <div class="overwrite-wrap">
+      <button class="overwrite" id="overwriteBtn" onclick="s('OVERWRITE')">OVERWRITE</button>
     </div>
   </div>
 </div>
@@ -244,6 +272,8 @@ const char PAGE_HTML[] PROGMEM = R"rawliteral(
   let bankHasData = [];
   let selectedBankUI = -1;
   let isBankPlayingUI = false;
+  let overwriteModeUI = false;
+  let overwriteTargetUI = 255;
 
   // Output LEDs
   for (let i=0; i<T; i++) {
@@ -280,6 +310,7 @@ const char PAGE_HTML[] PROGMEM = R"rawliteral(
         if (recordingBankUI === i) ws.send('BANK:'+i);
         return;
       }
+      if (overwriteModeUI) { ws.send('BANK:'+i); return; }
       if (bankHasData[i]) ws.send('BANK:'+i);
     });
     bankgrid.appendChild(btn);
@@ -328,10 +359,17 @@ const char PAGE_HTML[] PROGMEM = R"rawliteral(
       if (!btn) continue;
       btn.className = 'bank ';
       if (recordingBankUI === i) { btn.className += 'recording'; }
+      else if (overwriteModeUI && overwriteTargetUI === i) { btn.className += 'overwrite-target'; }
       else if (selectedBankUI === i && bankHasData[i]) { btn.className += 'selected'; }
       else if (bankHasData[i]) { btn.className += 'stored'; }
       else { btn.className += 'empty'; }
       btn.disabled = (isRecordingUI && recordingBankUI !== i);
+    }
+    let owBtn = document.getElementById('overwriteBtn');
+    if (owBtn) {
+      if (overwriteModeUI) { owBtn.classList.add('active'); }
+      else { owBtn.classList.remove('active'); }
+      owBtn.disabled = isRecordingUI;
     }
   }
 
@@ -429,6 +467,8 @@ const char PAGE_HTML[] PROGMEM = R"rawliteral(
       isRecordingUI = (Number(p[3]) === 1);
       recordingBankUI = Number(p[4]);
       isBankPlayingUI = (Number(p[5]) === 1);
+      overwriteModeUI = (Number(p[6]) === 1);
+      overwriteTargetUI = Number(p[7]);
       for (let i=0; i<NBKS; i++) { bankHasData[i] = (hasDataStr[i] === '1'); }
       updateBankUI();
       updateRecordBtn();

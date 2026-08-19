@@ -1,7 +1,29 @@
 #include "bis_banks.h"
 
+#include <LittleFS.h>
+
 #include "bis_state.h"
 #include "bis_web.h"
+
+namespace {
+bool littleFsReady = false;
+
+String bankPath(uint8_t bankId) {
+  return "/bank" + String(bankId) + ".bin";
+}
+
+void logFileOpenResult(bool ok, const String& path) {
+  logMessage(String(ok ? "FILE OPEN SUCCESS " : "FILE OPEN FAILED ") + path);
+}
+
+void logWriteResult(bool ok, const String& path) {
+  logMessage(String(ok ? "WRITE SUCCESS " : "WRITE FAILED ") + path);
+}
+
+void logReadResult(bool ok, const String& path) {
+  logMessage(String(ok ? "READ SUCCESS " : "READ FAILED ") + path);
+}
+}  // namespace
 
 void recordParamFrame() {
   if (!isRecording || recordingBank >= BIS_BANKS) return;
@@ -46,6 +68,32 @@ void captureBank(uint8_t bankId) {
   bank.bankDuration = (millis() - recordStartTime) & 0xFFFF;
   bank.hasData = true;
 
+  if (littleFsReady) {
+    const String path = bankPath(bankId);
+    File file = LittleFS.open(path, FILE_WRITE, true);
+    if (file) {
+      logFileOpenResult(true, path);
+      const size_t written = file.write((const uint8_t*)&bank, sizeof(BISBank));
+      file.close();
+      const bool writeOk = (written == sizeof(BISBank));
+      logWriteResult(writeOk, path);
+      if (writeOk) {
+        logMessage("BANK" + String(bankId) + " SAVED");
+      } else {
+        logMessage("BANK" + String(bankId) + " SAVE FAILED");
+      }
+      const bool existsAfterWrite = LittleFS.exists(path);
+      logMessage("EXISTS " + path + " " + String(existsAfterWrite ? "TRUE" : "FALSE"));
+    } else {
+      logFileOpenResult(false, path);
+      logWriteResult(false, path);
+      logMessage("EXISTS " + path + " " + String(LittleFS.exists(path) ? "TRUE" : "FALSE"));
+      logMessage("BANK" + String(bankId) + " SAVE FAILED");
+    }
+  } else {
+    logMessage("LITTLEFS FAILED");
+  }
+
   logMessage("CAPTURE BANK " + String(bankId + 1) + " (" + String(bank.bankDuration) + "ms)");
 }
 
@@ -61,6 +109,13 @@ void stopRecording() {
   recordParamFrame();
   captureBank(recordingBank);
   logMessage("RECORD STOP - BANK " + String(recordingBank + 1) + " SAVED");
+
+  if (overwriteMode) {
+    logMessage("OVERWRITE COMPLETE");
+    overwriteMode = false;
+    overwriteTargetBank = 255;
+  }
+
   isRecording = false;
   recordingBank = 255;
   isBankPlaying = false;
@@ -124,7 +179,10 @@ void getAnimatedParams(uint16_t playbackMs, uint16_t& outBpm, uint16_t& outOntim
 }
 
 void recallBank(uint8_t bankId) {
-  if (bankId >= BIS_BANKS || !banks[bankId].hasData) return;
+  if (bankId >= BIS_BANKS || !banks[bankId].hasData) {
+    logMessage("BANK" + String(bankId) + " NOT FOUND");
+    return;
+  }
 
   BISBank& bank = banks[bankId];
 
@@ -148,6 +206,7 @@ void recallBank(uint8_t bankId) {
   bankPlaybackStart = millis();
   lastStep = 0;
 
+  logMessage("BANK" + String(bankId) + " LOADED");
   logMessage("RECALL BANK " + String(bankId + 1));
   logMessage("AUTO-PLAY BANK " + String(bankId + 1));
 }
@@ -161,6 +220,8 @@ void syncBankStatus() {
   bankData += ":" + String(isRecording ? 1 : 0);
   bankData += ":" + String(isRecording ? recordingBank : 255);
   bankData += ":" + String(isBankPlaying ? 1 : 0);
+  bankData += ":" + String(overwriteMode ? 1 : 0);
+  bankData += ":" + String(overwriteTargetBank);
   webSocket.broadcastTXT(bankData);
 }
 
@@ -193,4 +254,97 @@ void sendAnimatedParams() {
 
   webSocket.broadcastTXT("ANIM:" + String(animBpm) + ":" + String(animOntime) + ":" + String(animDrunk) + ":" +
                          String(animProb) + ":" + String(animSteps) + ":" + String(animScrub));
+}
+
+void initBankStorage() {
+  littleFsReady = LittleFS.begin(true);
+  logMessage(littleFsReady ? "LITTLEFS READY" : "LITTLEFS FAILED");
+}
+
+void loadBanksFromStorage() {
+  int found = 0;
+  int empty = 0;
+
+  for (uint8_t bankId = 0; bankId < BIS_BANKS; bankId++) {
+    BISBank& bank = banks[bankId];
+
+    if (!littleFsReady) {
+      bank.hasData = false;
+      bank.paramFrameCount = 0;
+      logMessage("BANK" + String(bankId) + " EMPTY");
+      empty++;
+      continue;
+    }
+
+    const String path = bankPath(bankId);
+    if (!LittleFS.exists(path)) {
+      bank.hasData = false;
+      bank.paramFrameCount = 0;
+      logMessage("BANK" + String(bankId) + " EMPTY");
+      empty++;
+      continue;
+    }
+
+    File file = LittleFS.open(path, FILE_READ);
+    if (!file) {
+      logFileOpenResult(false, path);
+      logReadResult(false, path);
+      bank.hasData = false;
+      bank.paramFrameCount = 0;
+      logMessage("BANK" + String(bankId) + " EMPTY");
+      empty++;
+      continue;
+    }
+    logFileOpenResult(true, path);
+
+    const size_t bytesRead = file.read((uint8_t*)&bank, sizeof(BISBank));
+    file.close();
+
+    const bool readOk = (bytesRead == sizeof(BISBank));
+    logReadResult(readOk, path);
+
+    if (readOk && bank.hasData && bank.paramFrameCount <= MAX_PARAM_FRAMES) {
+      found++;
+      logMessage("BANK" + String(bankId) + " LOADED");
+    } else {
+      bank.hasData = false;
+      bank.paramFrameCount = 0;
+      empty++;
+      logMessage("BANK" + String(bankId) + " EMPTY");
+    }
+  }
+
+  logMessage("BANKS FOUND: " + String(found));
+  logMessage("BANKS EMPTY: " + String(empty));
+}
+
+void reportFilesystemStatus() {
+  logMessage("LITTLEFS STATUS");
+
+  for (uint8_t bankId = 0; bankId < BIS_BANKS; bankId++) {
+    const String filename = "bank" + String(bankId) + ".bin";
+
+    if (!littleFsReady) {
+      logMessage(filename + " MISSING");
+      continue;
+    }
+
+    const String path = "/" + filename;
+    if (!LittleFS.exists(path)) {
+      logMessage(filename + " MISSING");
+      continue;
+    }
+
+    File file = LittleFS.open(path, FILE_READ);
+    if (!file) {
+      logFileOpenResult(false, path);
+      logMessage(filename + " MISSING");
+      continue;
+    }
+    logFileOpenResult(true, path);
+
+    const size_t size = file.size();
+    file.close();
+    logMessage(filename + " SIZE=" + String(size));
+  }
 }

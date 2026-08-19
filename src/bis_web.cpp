@@ -30,6 +30,19 @@ void sendFullState(uint8_t clientNum) {
   syncBankStatus();
 }
 
+void broadcastFullState() {
+  webSocket.broadcastTXT("CFG:" + String(bis.bpm) + ":" + String(bis.ontimeMs) + ":" + String(bis.drunk) + ":" +
+                         String(bis.probability) + ":" + String(bis.steps) + ":" + String(bis.scrub));
+  int rangeStart, rangeEnd;
+  getActiveRange(rangeStart, rangeEnd);
+  webSocket.broadcastTXT("RNG:" + String(rangeStart) + ":" + String(rangeEnd));
+  webSocket.broadcastTXT("P:" + String(bis.currentStep));
+  for (int t = 0; t < TRACKS; t++)
+    for (int s = 0; s < MAX_STEPS; s++)
+      webSocket.broadcastTXT("G:" + String(t) + ":" + String(s) + ":" + String(bis.grid[t][s] ? 1 : 0));
+  syncBankStatus();
+}
+
 void onWebSocketEvent(uint8_t num, WStype_t type, uint8_t* payload, size_t) {
   if (type == WStype_CONNECTED) {
     sendFullState(num);
@@ -57,7 +70,12 @@ void onWebSocketEvent(uint8_t num, WStype_t type, uint8_t* payload, size_t) {
     syncBankStatus();
   } else if (m == "RECORD") {
     if (!isRecording) {
-      int target = firstEmptyBank();
+      int target = -1;
+      if (overwriteMode && overwriteTargetBank < BIS_BANKS) {
+        target = overwriteTargetBank;
+      } else {
+        target = firstEmptyBank();
+      }
       if (target < 0) {
         logMessage("RECORD - NO EMPTY BANKS AVAILABLE");
       } else {
@@ -85,10 +103,31 @@ void onWebSocketEvent(uint8_t num, WStype_t type, uint8_t* payload, size_t) {
       }
       return;
     }
+    if (overwriteMode) {
+      overwriteTargetBank = bankId;
+      logMessage("OVERWRITE TARGET = BANK " + String(bankId + 1));
+      syncBankStatus();
+      return;
+    }
     if (banks[bankId].hasData) {
       recallBank(bankId);
-      syncBankStatus();
+      broadcastFullState();
+    } else {
+      logMessage("BANK" + String(bankId) + " NOT FOUND");
     }
+  } else if (m == "OVERWRITE") {
+    if (isRecording) return;
+    overwriteMode = !overwriteMode;
+    if (overwriteMode) {
+      overwriteTargetBank = 255;
+      logMessage("OVERWRITE MODE ON");
+    } else {
+      overwriteTargetBank = 255;
+      logMessage("OVERWRITE MODE OFF");
+    }
+    syncBankStatus();
+  } else if (m == "FILESYS:") {
+    reportFilesystemStatus();
   } else if (m.startsWith("BPM:")) {
     if (!isRecording && !isBankPlaying) {
       bis.bpm = m.substring(4).toInt();

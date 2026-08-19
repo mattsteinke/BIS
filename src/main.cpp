@@ -1,5 +1,6 @@
 #include <Arduino.h>
 #include <WiFi.h>
+#include "bis_banks.h"
 #include "bis_scheduler.h"
 #include "bis_state.h"
 #include "bis_web.h"
@@ -20,7 +21,7 @@ void setup() {
   pixels.setBrightness(RGB_BRIGHTNESS);
   pixels.show();
 
-  for (int i = 0; i < BIS_BANKS; i++) {
+  for (int i = 0; i < BIS_BANKS; i++) { 
     banks[i].hasData = false;
     banks[i].paramFrameCount = 0;
   }
@@ -35,6 +36,9 @@ void setup() {
 
   webSocket.begin();
   webSocket.onEvent(onWebSocketEvent);
+
+  initBankStorage();
+  loadBanksFromStorage();
 
   logMessage("BIS V13 START - BANK CAPTURE/RECALL WITH ANIMATION");
   logMessage("Board: Ozbot DRVKit (ESP32-S3)");
