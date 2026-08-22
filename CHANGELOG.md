@@ -8,6 +8,53 @@ The format is inspired by Keep a Changelog and uses semantic versioning where pr
 
 # [Unreleased]
 
+## UI Milestone
+
+### Changed
+- Redesigned browser interface into panel-based layout
+- Combined Banks and Transport into a unified performance section
+- Converted Parameters into a responsive two-column parameter matrix
+- Added placeholder distributed parameters:
+  - CCA
+  - CCB
+  - CCC
+  - CCD
+  - CCE
+  - CCF
+  - CCG
+  - CCH
+- Improved browser responsiveness and scaling behavior
+- Enlarged bank pads for performance use
+- Enlarged sequencer cells
+- Enlarged output status indicators
+- Added MIDI status indicator to Meter section
+
+### Fixed
+- Restored SCRUB/STEPS sequencer range highlighting after removal of legacy range display
+- Decoupled sequencer highlighting from obsolete rangebar UI elements
+
+### Preserved
+- WebSocket protocol
+  - CFG:
+  - RNG:
+  - G:
+  - P:
+  - BANKS:
+  - OUT:
+  - LOG:
+  - ANIM:
+- Bank behavior
+- Sequencer behavior
+- Playback behavior
+- Browser synchronization behavior
+
+### Notes
+This milestone focuses on interface architecture and usability.
+
+No firmware behavior changes were intended.
+
+The interface now functions more as a musical instrument control surface and less as a firmware configuration page.
+
 ## Planned
 
 ### V15
