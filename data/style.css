@@ -1,10 +1,4 @@
-body {
-  background: #111;
-  color: #fff;
-  font-family: Arial, sans-serif;
-  margin: 10px;
-  max-width: 900px;
-}
+
 h2 { margin: 6px 6px 6px 6px; font-size: 16px; }
 .control-row {
   margin: 8px 8px 8px ;
@@ -23,28 +17,6 @@ button:disabled { opacity: 0.35; cursor: not-allowed; }
 button.default { background: #444; color: #fff; }
 button.default:hover:not(:disabled) { background: #666; }
 
-/* record & stop buttons – same width, vertical stack */
-.record-stop-stack {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: 6px;
-  width: 82px;
-}
-
-.record-stop-stack button {
-  width: 82px;
-  margin: 0;
-  box-sizing: border-box;
-  height: 40px;
-  font-size: 10px;
-  background: #444;
-  color: #fff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-}
 
 button.record.active {
   background: #ff0000;
@@ -55,15 +27,6 @@ button.record.active:hover { background: #cc0000; }
 button.record:hover:not(:disabled) { background: #666; }
 button.record.active:hover { background: #cc0000; }
 
-button.bank {
-  width: 40px;
-  height: 40px;
-  padding: 0;
-  margin: 2px;
-  background: #333;
-  color: #fff;
-  font-size: 18px;
-}
 button.bank.empty { background: #222; }
 button.bank.stored { background: #ff8800; }
 button.bank.selected { background: #ffff00; color: #000; }
@@ -74,10 +37,10 @@ button.overwrite { background: #444; color: #fff; }
 button.overwrite.active { background: #aa00ff; color: #fff; box-shadow: 0 0 8px #aa00ff; }
 
 .cell {
-  width: 20px;
-  height: 20px;
+  width: 31px;
+  height: 31px;
   display: inline-block;
-  margin: 1px;
+  margin: 2px;
   border: 1px solid #333;
   background: #222;
   cursor: pointer;
@@ -94,19 +57,13 @@ button.overwrite.active { background: #aa00ff; color: #fff; box-shadow: 0 0 8px 
   z-index: 3;
   opacity: 1;
 }
-.value {
-  display: inline-block;
-  width: 50px;
-  text-align: right;
-  font-weight: bold;
-}
 .outled {
-  width: 16px;
-  height: 16px;
+  width: 55px;
+  height: 55px;
   border: 1px solid #555;
   background: #111;
   display: inline-block;
-  margin: 2px;
+  margin: 5px;
   border-radius: 2px;
 }
 .outled.active {
@@ -122,10 +79,6 @@ button.overwrite.active { background: #aa00ff; color: #fff; box-shadow: 0 0 8px 
   font-size: 11px;
   overflow-y: auto;
   resize: vertical;
-}
-input[type=range] {
-  width: 200px;
-  vertical-align: middle;
 }
 input[type=range]:disabled { opacity: 0.4; cursor: not-allowed; }
 .grid-row {
@@ -152,34 +105,360 @@ input[type=range]:disabled { opacity: 0.4; cursor: not-allowed; }
   transition: left 0.1s linear, width 0.1s linear;
 }
 #rng { font-size: 12px; color: #ff8800; font-weight: bold; }
+
+
+hr { border-color: #333; }
+/* ===================================================== */
+/* V14 PANEL LAYOUT */
+/* Add at bottom of existing style.css */
+/* ===================================================== */
+
+.panel {
+  background: #1a1a1a;
+  border: 1px solid #333;
+  border-radius: 4px;
+  padding: 10px;
+  margin-bottom: 12px;
+}
+
+.panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  margin-bottom: 10px;
+
+  color: #8fd3ff;
+  font-size: 13px;
+  font-weight: bold;
+}
+
+.panel-body {
+  padding-top: 4px;
+}
+
+/* ===================================================== */
+/* BANKS & TRANSPORT */
+/* ===================================================== */
+
 .bank-section {
   display: flex;
+
   align-items: center;
-  gap: 18px;
+
+  justify-content: space-between;
+
+  width: 100%;
+
+  gap: 30px;
 }
 
 .bank-column {
+  flex: 1;
+
   display: flex;
   flex-direction: column;
-  gap: 5px;
+  justify-content: center;
 }
 
 .bank-row {
   display: grid;
-  grid-template-columns: repeat(8, 40px);
-  gap: 3px;
+  grid-template-columns: repeat(8, 1fr);
+  gap: 6px;
 }
 
-.overwrite-wrap {
+button.bank {
+  width: 100%;
+  aspect-ratio: 1;
+
+  margin: 0;
+  padding: 0;
+
+  font-size: 22px;
+  font-weight: bold;
+
+  background: #333;
+  color: white;
+}
+
+.transport-column {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  flex-shrink: 0;
+}
+
+.transport-column {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.transport-column + .transport-column {
+  margin-left: 0px;
+}
+
+.transport-column button {
+  width: 110px;
+  height: 70px;
+  margin: 0;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+/* ===================================================== */
+/* PARAMETER AREA */
+/* ===================================================== */
+
+.value {
+  display: inline-block;
+  width: 50px;
+  text-align: right;
+  font-weight: bold;
+  color: #ff8800;
+}
+
+/* ===================================================== */
+/* RANGE DISPLAY */
+/* ===================================================== */
+
+.rangebar {
+  width: 475px;
+}
+
+/* ===================================================== */
+/* METER */
+/* ===================================================== */
+
+.meter-row {
   display: flex;
   align-items: center;
-  justify-content: center;
-  height: 83px;
-  min-width: 100px;
+  gap: 16px;
 }
 
-.overwrite-wrap button {
-  margin: 0;
-  height: 40px;
+.meter-label {
+  min-width: 70px;
+  color: #fff;
+  font-weight: bold;
 }
-hr { border-color: #333; }
+
+/* ===================================================== */
+/* MIDI STATUS */
+/* ===================================================== */
+
+.midi-status {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: auto;
+}
+
+.midi-led {
+  width: 30px;
+  height: 30px;
+
+  border: 1px solid #555;
+  border-radius: 2px;
+
+  background: #222;
+}
+
+.midi-led.active {
+  background: #00ff00;
+  box-shadow: 0 0 8px #00ff00;
+}
+
+/* ===================================================== */
+/* ADVANCED PANELS (for later details/summary sections) */
+/* ===================================================== */
+
+details.panel {
+  padding: 0;
+  overflow: hidden;
+}
+
+details.panel summary {
+  list-style: none;
+  cursor: pointer;
+
+  padding: 10px;
+
+  background: #181818;
+  color: #8fd3ff;
+
+  font-weight: bold;
+}
+
+details.panel summary::-webkit-details-marker {
+  display: none;
+}
+
+details.panel summary::before {
+  content: "▶ ";
+  color: #8fd3ff;
+}
+
+details.panel[open] summary::before {
+  content: "▼ ";
+}
+
+details.panel .panel-body {
+  padding: 12px;
+}
+
+/* ===================================================== */
+/* FUTURE TABLES */
+/* ===================================================== */
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+th {
+  text-align: left;
+  background: #222;
+  color: #8fd3ff;
+  padding: 6px;
+}
+
+td {
+  padding: 6px;
+  border-bottom: 1px solid #333;
+}
+
+input[type="text"],
+input[type="number"] {
+  background: #ff8800;
+  color: #000;
+  border: none;
+  padding: 4px 6px;
+  width: 60px;
+  font-weight: bold;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background: #111;
+  color: #fff;
+
+  font-family: Arial, sans-serif;
+
+  margin: 0;
+  padding: 12px;
+
+  box-sizing: border-box;
+
+  display: flex;
+  justify-content: center;
+
+  width: 100%;
+}
+
+#app {
+  width: 96vw;
+  max-width: 950px;
+}
+
+.panel {
+  width: 100%;
+}
+
+input[type=range] {
+  width: 100%;
+  max-width: 400px;
+  vertical-align: middle;
+}
+.parameter-grid {
+  display: grid;
+
+  grid-template-columns:
+    1fr
+    1fr;
+
+  gap: 10px 20px;
+}
+
+.parameter-cell {
+  background: #1a1a1a;
+
+  border: 1px solid #333;
+
+  padding: 8px;
+
+  border-radius: 4px;
+}
+
+.parameter-cell input[type=range] {
+  width: 100%;
+}
+
+.future-param {
+  border: 1px solid #333;
+}
+
+/* ===================================================== */
+/* PARAMETERS */
+/* ===================================================== */
+
+.parameter-row {
+  display: grid;
+
+  grid-template-columns:
+      80px
+      1fr
+      50px;
+
+  align-items: center;
+
+  gap: 12px;
+
+  min-height: 40px;
+}
+
+.parameter-name {
+  color: #fff;
+  font-weight: bold;
+  text-align: left;
+}
+
+.parameter-value {
+  color: #ff8800;
+  font-weight: bold;
+  text-align: right;
+}
+
+.parameter-row input[type="range"] {
+  width: 100%;
+  margin: 0;
+}
+
+@media (max-width: 900px) {
+
+  .parameter-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .bank-section {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .bank-row {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .transport-column {
+    flex-direction: row;
+    width: auto;
+  }
+  .transport-column + .transport-column {
+  margin-left: 0;
+}
+}

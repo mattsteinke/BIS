@@ -83,10 +83,12 @@ function updateRangeBar() {
   let stepsVal = parseInt(st.value);
   let scrubVal = parseInt(sc.value);
   let rb = document.getElementById('rh');
-  let left = (scrubVal / 25) * 100;
-  let width = (stepsVal / 25) * 100;
-  rb.style.left = left + '%';
-  rb.style.width = width + '%';
+  if (rb) {
+    let left = (scrubVal / 25) * 100;
+    let width = (stepsVal / 25) * 100;
+    rb.style.left = left + '%';
+    rb.style.width = width + '%';
+  }
   updateRangeHighlight();
 }
 
@@ -185,7 +187,8 @@ ws.onmessage = e => {
   }
   if (m.startsWith('RNG:')) {
     let p = m.split(':');
-    rng.textContent = 'RANGE='+p[1]+'-'+p[2];
+    let rngEl = document.getElementById('rng');
+    if (rngEl) rngEl.textContent = 'RANGE='+p[1]+'-'+p[2];
   }
   if (m.startsWith('ANIM:')) {
     let p = m.split(':');
