@@ -58,6 +58,26 @@ The interface now functions more as a musical instrument control surface and les
 ## Planned
 
 ### V15
+V15 Phase 1
+
+Added:
+- Parameter Curve Settings
+- Voice Curve Settings
+- MIDI Map Architecture
+- Pin Map Architecture
+- Global Module
+- Theme Variable System
+
+Improved:
+- Responsive Layout
+- Parameters Matrix
+- Banks and Transport Layout
+- Global Diagnostics
+
+Notes:
+All settings remain disabled placeholders pending
+LittleFS persistence and runtime integration.
+
 - Preferences panel
 - Persistent user settings
 - Original BIS Composer-inspired configuration workflow
