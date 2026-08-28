@@ -1127,7 +1127,7 @@
           <td>RESET</td>
           <td>
             <input id="midiResetNote" type="number"
-                   value="0"
+                   value="1"
                    disabled>
           </td>
         </tr>
@@ -1235,11 +1235,11 @@
 
         <tr><td>V1</td><td><input id="pinOut1" type="number" value="1" disabled></td></tr>
         <tr><td>V2</td><td><input id="pinOut2" type="number" value="2" disabled></td></tr>
-        <tr><td>V3</td><td><input id="pinOut3" type="number" value="3" disabled></td></tr>
-        <tr><td>V4</td><td><input id="pinOut4" type="number" value="4" disabled></td></tr>
-        <tr><td>V5</td><td><input id="pinOut5" type="number" value="5" disabled></td></tr>
-        <tr><td>V6</td><td><input id="pinOut6" type="number" value="6" disabled></td></tr>
-        <tr><td>V7</td><td><input id="pinOut7" type="number" value="7" disabled></td></tr>
+        <tr><td>V3</td><td><input id="pinOut3" type="number" value="8" disabled></td></tr>
+        <tr><td>V4</td><td><input id="pinOut4" type="number" value="9" disabled></td></tr>
+        <tr><td>V5</td><td><input id="pinOut5" type="number" value="10" disabled></td></tr>
+        <tr><td>V6</td><td><input id="pinOut6" type="number" value="11" disabled></td></tr>
+        <tr><td>V7</td><td><input id="pinOut7" type="number" value="12" disabled></td></tr>
       </table>
 
     </div>
@@ -1253,9 +1253,11 @@
       <table class="resource-table">
         <tr><th>PIN</th><th>GPIO</th></tr>
 
-        <tr><td>CS</td><td><input id="pinTftCs" type="number" value="9" disabled></td></tr>
-        <tr><td>DC</td><td><input id="pinTftDc" type="number" value="10" disabled></td></tr>
-        <tr><td>RST</td><td><input id="pinTftRst" type="number" value="11" disabled></td></tr>
+        <tr><td>CS</td><td><input id="pinTftCs" type="number" value="15" disabled></td></tr>
+        <tr><td>RST</td><td><input id="pinTftRst" type="number" value="6" disabled></td></tr>
+        <tr><td>DC</td><td><input id="pinTftDc" type="number" value="7" disabled></td></tr>
+        <tr><td>SCLK</td><td><input id="pinTftSclk" type="number" value="4" disabled></td></tr>
+        <tr><td>MOSI</td><td><input id="pinTftMosi" type="number" value="5" disabled></td></tr>
       </table>
 
     </div>
@@ -1263,13 +1265,13 @@
     <div class="setting-group">
 
       <div class="setting-title">
-        SENSOR PINS
+        DIGITAL IO PINS
       </div>
 
       <table class="resource-table">
         <tr><th>ITEM</th><th>GPIO</th></tr>
 
-        <tr><td>IR</td><td><input id="pinIrSensor" type="number" value="12" disabled></td></tr>
+        <tr><td>IR</td><td><input id="pinIrSensor" type="number" value="16" disabled></td></tr>
         <tr><td>RGB LED</td><td><input id="pinRgbLed" type="number" value="48" disabled></td></tr>
       </table>
 

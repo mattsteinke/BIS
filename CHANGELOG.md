@@ -1,6 +1,6 @@
 # BIS Changelog
 
-All notable changes to the Behavioral Instrument System (BIS) will be documented in this file.
+All notable changes to the Behavioral Instrument System (BIS) are documented in this file.
 
 The format is inspired by Keep a Changelog and uses semantic versioning where practical.
 
@@ -8,109 +8,122 @@ The format is inspired by Keep a Changelog and uses semantic versioning where pr
 
 # [Unreleased]
 
-## UI Milestone
-
-### Changed
-- Redesigned browser interface into panel-based layout
-- Combined Banks and Transport into a unified performance section
-- Converted Parameters into a responsive two-column parameter matrix
-- Added placeholder distributed parameters:
-  - CCA
-  - CCB
-  - CCC
-  - CCD
-  - CCE
-  - CCF
-  - CCG
-  - CCH
-- Improved browser responsiveness and scaling behavior
-- Enlarged bank pads for performance use
-- Enlarged sequencer cells
-- Enlarged output status indicators
-- Added MIDI status indicator to Meter section
-
-### Fixed
-- Restored SCRUB/STEPS sequencer range highlighting after removal of legacy range display
-- Decoupled sequencer highlighting from obsolete rangebar UI elements
-
-### Preserved
-- WebSocket protocol
-  - CFG:
-  - RNG:
-  - G:
-  - P:
-  - BANKS:
-  - OUT:
-  - LOG:
-  - ANIM:
-- Bank behavior
-- Sequencer behavior
-- Playback behavior
-- Browser synchronization behavior
-
-### Notes
-This milestone focuses on interface architecture and usability.
-
-No firmware behavior changes were intended.
-
-The interface now functions more as a musical instrument control surface and less as a firmware configuration page.
-
 ## Planned
 
-### V15
-V15 Phase 1
+### V15 Phase 2
 
-Added:
-- Parameter Curve Settings
-- Voice Curve Settings
-- MIDI Map Architecture
-- Pin Map Architecture
-- Global Module
-- Theme Variable System
+#### Persistence
+- LittleFS settings persistence
+- Curve settings persistence
+- MIDI map persistence
+- Pin map persistence
+- System settings persistence
 
-Improved:
-- Responsive Layout
-- Parameters Matrix
-- Banks and Transport Layout
-- Global Diagnostics
+#### Configuration
+- Runtime curve editing
+- Runtime MIDI mapping
+- Runtime pin assignment
+- JSON export/import
 
-Notes:
-All settings remain disabled placeholders pending
-LittleFS persistence and runtime integration.
+#### Appearance
+- Theme hue control
+- Theme presets
 
+  - Blue
+  - Green
+  - Purple
+  - Amber
+  - Monochrome
+
+#### General
 - Preferences panel
 - Persistent user settings
-- Original BIS Composer-inspired configuration workflow
 - Additional UI refinement
 
-Theme system
+---
 
-GLOBAL
+# [v15.0] - Phase 1
 
-▼ APPEARANCE
+## Added
 
-Theme Hue
+### Parameter Configuration
+- Parameter Curves architecture
+- Voice Curves architecture
 
-Theme Presets
+### Global Configuration
+- MIDI Map architecture
+- Pin Map architecture
+- Global module architecture
 
-Blue
-Green
-Purple
-Amber
-Monochrome
+### Theme System
+- CSS variable-based theme system
+- Semantic color hierarchy
+- Color opacity hierarchy
 
+### Future Integration
+- Configuration control IDs for:
+  - Parameter Curves
+  - Voice Curves
+  - MIDI Map
+  - Pin Map
 
+## Changed
 
-### Future
-- TFT Animation Module
-- Web MIDI
-- Extended performance and composition tools
+### Interface Architecture
+
+Reorganized interface into:
+
+- Banks & Transport
+- Parameters
+  - Parameter Curves
+  - Voice Curves
+- Sequencer
+- Global
+  - Outputs
+  - MIDI
+  - Console
+  - MIDI Map
+  - Pin Map
+
+### UI Layout
+
+- Responsive panel-based layout
+- Responsive parameter matrix
+- Responsive bank layout
+- Responsive sequencer layout
+- Responsive meter layout
+
+### Global Module
+
+- Renamed Meter to Global
+- Moved Console into Global
+- Combined system status and configuration tools
+
+## Improved
+
+- Browser responsiveness
+- Mobile usability
+- Parameter organization
+- Configuration discoverability
+- Instrument-oriented workflow
+- Theme consistency
+
+## Notes
+
+All configuration controls remain disabled placeholders.
+
+No firmware behavior changes were introduced.
+
+No WebSocket protocol changes were introduced.
+
+This release establishes the complete configuration architecture for future integration.
 
 ---
 
 # [v14.0]
 
 ## Changed
+
 - Web UI moved out of embedded firmware source
 - Removed monolithic `web_page.h`
 - Browser application split into:
@@ -119,30 +132,24 @@ Monochrome
   - `data/app.js`
 - Browser assets now served from LittleFS
 
-- Migrate hardcoded colors to CSS variables
-- Standardize:
-    accent
-    text
-    data
-    status
-- Use opacity variants for hierarchy
-
 ## Improved
+
 - Clear separation between firmware and browser application
 - Smaller and more maintainable firmware codebase
 - Faster browser UI iteration
 - Independent firmware and UI deployment workflows
 
 ## Preserved
+
 - Existing WebSocket protocol
-  - `CFG:`
-  - `RNG:`
-  - `G:`
-  - `P:`
-  - `BANKS:`
-  - `OUT:`
-  - `LOG:`
-  - `ANIM:`
+  - CFG:
+  - RNG:
+  - G:
+  - P:
+  - BANKS:
+  - OUT:
+  - LOG:
+  - ANIM:
 - Sequencer behavior
 - Bank behavior
 - Playback behavior
@@ -150,19 +157,22 @@ Monochrome
 - Persistence behavior
 
 ## Notes
+
 This release introduces no intended user-visible functional changes.
 
-V14 is an architectural cleanup release focused on decoupling the browser interface from firmware while preserving all existing behavior.
+V14 focused on architectural cleanup and browser/firmware separation.
 
 ---
 
 # [v13.1]
 
 ## Fixed
+
 - Bank parameter playback now loops continuously with recalled banks
 - Recorded parameter animations no longer freeze after a single pass
 
 ## Improved
+
 - Browser interface cleanup
 - Web UI readability and maintainability
 
@@ -171,6 +181,7 @@ V14 is an architectural cleanup release focused on decoupling the browser interf
 # [v13.0]
 
 ## Added
+
 - ESP32-S3 PlatformIO build environment
 - Web-based control interface
 - WebSocket communications
@@ -184,10 +195,12 @@ V14 is an architectural cleanup release focused on decoupling the browser interf
 - RGB status feedback
 
 ## Hardware
+
 - ESP32-S3 Ozbot DRVKit Clone
 - RGB LED on GPIO 48
 
 ## Platform
+
 - PlatformIO
 - Arduino Framework
 
@@ -195,32 +208,25 @@ V14 is an architectural cleanup release focused on decoupling the browser interf
 
 # Version Roadmap
 
-## v15
-
-- Module-specific settings architecture reserved.
-- PARAMETERS will be first implementation.
-- GLOBAL will own:
-  - Pin Map
-  - MIDI Map
-  - System Settings
-- Other modules may add Settings subsections as needed.
-
 ## v16
-Visualization
+
+### Visualization
 
 - TFT Animation Module
 - Enhanced visual feedback
 - Animation development tools
 
 ## v17
-Performance Integration
+
+### Performance Integration
 
 - Web MIDI
 - External control integration
 - Expanded performance workflows
 
 ## Future
-Runtime architecture evolution
+
+### Runtime Architecture Evolution
 
 - Voice Manager
 - Routing Engine

@@ -46,12 +46,14 @@ The browser owns:
 - Editing
 - Monitoring
 - User interaction
+- Configuration
+- Theme management
 
 ### Web Application Structure
 
 UI is served from LittleFS.
 
-```
+```text
 data/
 ├── index.html
 ├── style.css
@@ -59,6 +61,28 @@ data/
 ```
 
 Firmware and browser code are developed independently.
+
+---
+
+## Interface Architecture
+
+```text
+BANKS & TRANSPORT
+
+PARAMETERS
+    ▼ PARAMETER CURVES
+    ▼ VOICE CURVES
+
+SEQUENCER
+
+GLOBAL
+    OUTPUTS
+    MIDI
+    CONSOLE
+
+    ▼ MIDI MAP
+    ▼ PIN MAP
+```
 
 ---
 
@@ -90,6 +114,8 @@ Firmware and browser code are developed independently.
 ### Browser
 
 - Web-based control surface
+- Responsive layout
+- Mobile support
 - WebSocket communication
 - State recovery after refresh
 - Output indicators
@@ -103,13 +129,80 @@ Firmware and browser code are developed independently.
 
 ---
 
+## Configuration Architecture
+
+### Parameter Curves
+
+Every parameter supports:
+
+- INIT
+- MID
+- MAX
+
+curve definitions.
+
+Parameters:
+
+- BPM
+- ONTIME
+- DRUNK
+- PROB
+- STEPS
+- SCRUB
+- CCA
+- CCB
+- CCC
+- CCD
+- CCE
+- CCF
+- CCG
+- CCH
+
+### Voice Curves
+
+Each voice/output supports:
+
+- INIT
+- MID
+- MAX
+
+curve definitions.
+
+Voices:
+
+- V1
+- V2
+- V3
+- V4
+- V5
+- V6
+- V7
+
+### Global
+
+Global owns shared resources:
+
+- Outputs
+- MIDI Activity
+- Console
+- MIDI Map
+- Pin Map
+
+### Current Status
+
+Configuration controls currently function as UI architecture placeholders.
+
+Settings remain intentionally disabled until persistence and runtime integration are implemented.
+
+---
+
 ## WebSocket Protocol
 
 The protocol below is considered stable.
 
 Do not change unless explicitly requested.
 
-```
+```text
 CFG:
 RNG:
 G:
@@ -140,6 +233,73 @@ A bank represents a complete behavioral state including:
 - Recorded parameter performance
 
 Favor behavior composition over pattern storage.
+
+---
+
+## Configuration Philosophy
+
+Module settings should remain with the module they affect.
+
+Examples:
+
+PARAMETERS
+
+- Parameter Curves
+- Voice Curves
+
+GLOBAL
+
+- MIDI Map
+- Pin Map
+- Shared Resources
+
+Shared resources belong in GLOBAL.
+
+Performance controls belong in their respective modules.
+
+---
+
+## Theme System
+
+Colors are managed via CSS custom properties.
+
+Semantic hierarchy:
+
+### Accent
+
+- Module headers
+- Settings headers
+- Navigation
+
+### Data
+
+- Runtime values
+- Editable values
+
+### Success
+
+- Output activity
+- MIDI activity
+
+### Warning
+
+- Selection
+- Playhead
+
+### Danger
+
+- Recording
+- Errors
+
+### Overwrite
+
+- Overwrite mode
+
+Future:
+
+- Theme Hue control
+- Theme Presets
+- Appearance management
 
 ---
 
@@ -217,12 +377,31 @@ Rules:
 
 ## Current Priorities
 
-### V15
+### V15 Phase 2
 
-- Preferences panel
-- Persistent user settings
-- Configuration workflow improvements
-- Browser usability improvements
+Configuration Integration
+
+- LittleFS settings persistence
+- Curve settings persistence
+- MIDI map persistence
+- Pin map persistence
+
+Runtime Integration
+
+- Parameter curve evaluation
+- Voice curve evaluation
+- MIDI mapping behavior
+- Pin assignment behavior
+
+Theme System
+
+- Theme Hue control
+- Theme presets
+
+Browser Composer
+
+- JSON import/export
+- Preset management
 
 ### Future
 

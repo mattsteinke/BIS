@@ -147,10 +147,9 @@ void logMessage(String m) {
 
 ---
 
-## Current Status
+### Current Status
 
 Stable:
-
 - Sequencer
 - Banks
 - Persistence
@@ -158,7 +157,15 @@ Stable:
 - WebSocket communication
 - LittleFS web hosting
 
-Current Focus:
+V15 Phase 1 Complete:
+- Parameter Curves architecture
+- Voice Curves architecture
+- MIDI Map architecture
+- Pin Map architecture
+- Global module
+- Theme variable system
 
-- UI refinement
-- Preferences system planning (V15)
+Current Focus:
+- Configuration persistence
+- Runtime settings integration
+- Theme system expansion

@@ -2,15 +2,18 @@
 
 Behavioral Instrument System (BIS)
 
-BIS is a platform for creating autonomous kinetic sculptures, robotic musical instruments, interactive installations, interactive toys, and experimental performance systems.
+BIS is a platform for autonomous kinetic sculptures, robotic musical instruments,
+interactive installations, experimental control systems, and behavioral composition.
 
-The current implementation targets ESP32-S3 hardware and provides a browser-based sequencer and performance environment where behaviors can be composed, recorded, recalled, and performed without requiring a computer during exhibition.
+The current implementation targets ESP32-S3 hardware and provides a browser-based
+performance and configuration environment where behaviors can be composed, recorded,
+recalled, modified, and performed without requiring a computer during exhibition.
 
 ---
 
 # Current Platform
 
-Hardware:
+## Hardware
 
 - ESP32-S3 Ozbot DRVKit Clone
 - ESP32-S3 Revision v0.2
@@ -19,7 +22,7 @@ Hardware:
 - Native USB
 - RGB LED on GPIO 48
 
-Software:
+## Software
 
 - PlatformIO
 - Arduino Framework
@@ -27,6 +30,7 @@ Software:
 - WebServer
 - WebSockets
 - Adafruit NeoPixel
+- LittleFS
 
 ---
 
@@ -37,73 +41,152 @@ Software:
 - 7-track sequencer
 - Variable loop lengths
 - Probability control
-- Drunk/random walk step movement
+- Drunk/random walk sequencing
 - Adjustable BPM
 - Adjustable pulse on-time
+- Real-time range visualization
 
-## Banks
+## Banks & Transport
 
 - 16 performance banks
-- Pattern storage
-- Parameter recording
-- Parameter playback
+- Bank recording
 - Bank recall
 - Looping playback
+- Performance transport controls
+- Overwrite workflow
+
+## Parameters
+
+### Runtime Parameters
+
+- BPM
+- ONTIME
+- DRUNK
+- PROB
+- STEPS
+- SCRUB
+
+### Distributed Parameters
+
+- CCA
+- CCB
+- CCC
+- CCD
+- CCE
+- CCF
+- CCG
+- CCH
 
 ## Browser Interface
 
 - Web-based control surface
 - WebSocket communication
-- Sequencer editing
-- Parameter editing
-- Bank management
+- Responsive layout
+- Mobile-compatible layout
 - Live performance monitoring
+- Global diagnostics
 
-## Runtime
+---
 
-- Autonomous operation
-- Browser optional after configuration
-- ESP32-hosted UI
-- Real-time control
+# Configuration Architecture (V15)
+
+## Parameters
+
+### Parameter Curves
+
+Each parameter provides:
+
+- INIT
+- MID
+- MAX
+
+curve configuration points.
+
+### Voice Curves
+
+Each output voice provides:
+
+- INIT
+- MID
+- MAX
+
+curve configuration points.
+
+## Global
+
+### Visible
+
+- Outputs
+- MIDI Activity
+- Console
+
+### Configuration
+
+- MIDI Map
+- Pin Map
+
+### Future
+
+- System Settings
+- Theme Control
+- JSON Import / Export
+
+---
+
+# UI Architecture
+
+BANKS & TRANSPORT
+
+PARAMETERS
+    ▼ PARAMETER CURVES
+    ▼ VOICE CURVES
+
+SEQUENCER
+
+GLOBAL
+    OUTPUTS
+    MIDI
+    CONSOLE
+
+    ▼ MIDI MAP
+    ▼ PIN MAP
 
 ---
 
 # Project Structure
 
-```text
 src/
-    Firmware implementation
+    ESP32 firmware
 
 include/
-    Headers and shared definitions
+    Shared headers
+
+data/
+    index.html
+    style.css
+    app.js
 
 lib/
-    Project libraries
+    Libraries
 
 docs/
     Documentation
 
 platformio.ini
-    PlatformIO build configuration
-```
+    Platform configuration
 
 ---
 
 # Build
 
-Compile:
+Firmware:
 
 ```bash
 platformio run
-```
-
-Upload:
-
-```bash
 platformio run -t upload
 ```
 
-Upload filesystem image (LittleFS web app files in [data/](/Users/matthewsteinke/Documents/PlatformIO/Projects/BIS/data)):
+Web UI (LittleFS):
 
 ```bash
 platformio run -t uploadfs
@@ -126,16 +209,35 @@ platformio device monitor
 - Autonomous performance
 - Reusable compositions
 - Hardware-independent artistic structures
+- Modular configuration architecture
 
 ---
 
 # Development Status
 
-Current Stable Version:
+Current Stable Version: V14
 
-```text
-v14
-```
+Current Development Version: V15 Phase 1
+
+Completed
+
+- LittleFS web architecture
+- Responsive interface
+- Global module
+- Parameter Curves architecture
+- Voice Curves architecture
+- MIDI Map architecture
+- Pin Map architecture
+- Theme variable system
+
+Next
+
+- Settings persistence
+- Curve integration
+- MIDI map integration
+- Pin map integration
+- Theme hue control
+- JSON import/export
 
 ---
 

@@ -3,7 +3,7 @@
 This document tracks planned development for the Behavioral Instrument System (BIS).
 
 The goal is to prioritize practical improvements that make BIS more reliable,
-usable, and maintainable while gradually evolving toward the long-term BIS architecture.
+usable, and maintainable while evolving toward a modular behavioral instrument architecture.
 
 ---
 
@@ -11,93 +11,152 @@ usable, and maintainable while gradually evolving toward the long-term BIS archi
 
 ## V14
 
-Implemented:
+Completed:
 
 - ESP32-S3 PlatformIO firmware
+- WebSocket control system
 - Browser-hosted UI
-- WebSocket control
 - 7-track sequencer
-- 16 banks
+- 16 performance banks
 - Parameter recording
 - Parameter playback
-- Looping bank playback
-- Probability control
-- Drunk-walk sequencing
-- RGB status feedback
 - Persistent bank storage
 - Browser state synchronization
 - LittleFS web hosting
-- Separated HTML / CSS / JavaScript architecture
+- Separate:
+  - index.html
+  - style.css
+  - app.js
 
 ---
 
-# Next Release
+# Current Development
 
-## V15
+## V15 Phase 1 ✅ Complete
 
-### Preferences System
+### Configuration Architecture
+
+Implemented:
+
+- Parameter Curves architecture
+- Voice Curves architecture
+- MIDI Map architecture
+- Pin Map architecture
+- Global module architecture
+- Theme variable system
+- Responsive panel-based UI
+- Configuration control naming system
+
+### Current Interface
+
+BANKS & TRANSPORT
+
+PARAMETERS
+    ▼ PARAMETER CURVES
+    ▼ VOICE CURVES
+
+SEQUENCER
+
+GLOBAL
+    OUTPUTS
+    MIDI
+    CONSOLE
+
+    ▼ MIDI MAP
+    ▼ PIN MAP
+
+Status:
+
+Architecture complete.
+Runtime integration pending.
+
+---
+
+## V15 Phase 2
+
+### Settings Persistence
 
 Priority: High
 
 Goal:
 
-Provide a persistent configuration system inspired by the original BIS Composer workflow.
+Connect existing configuration architecture to runtime storage.
 
 Features:
 
-- Preferences panel
-- Persistent user settings
-- Startup configuration
-- User-adjustable defaults
-- Settings management UI
+- LittleFS settings persistence
+- Curve settings persistence
+- MIDI map persistence
+- Pin map persistence
+- System settings persistence
 
 Success Criteria:
 
 - Settings survive reboot
-- Settings remain independent from banks
-- Existing workflow remains unchanged
+- Settings restore automatically
+- Existing workflow preserved
 
 ---
 
-### Performance Feedback
+## V15 Phase 3
+
+### Runtime Integration
+
+Priority: High
+
+Goal:
+
+Connect UI configuration to actual runtime behavior.
+
+Features:
+
+- Parameter curve evaluation
+- Voice curve evaluation
+- MIDI mapping runtime behavior
+- Pin assignment runtime behavior
+
+Success Criteria:
+
+- Curve values affect behavior
+- MIDI mappings function
+- Pin assignments function
+- Existing performance system remains stable
+
+---
+
+## V15 Phase 4
+
+### Theme and Appearance
 
 Priority: Medium
 
 Goal:
 
-Improve performer awareness of timing and system state.
+Allow UI customization without affecting instrument behavior.
 
 Features:
 
-- Loop-start visual indicator
-- Active bank feedback improvements
-- Enhanced visual status monitoring
+- Theme Hue control
+- Theme Presets
+
+Presets:
+
+- Blue
+- Green
+- Purple
+- Amber
+- Monochrome
+
+Future:
+
+- User theme presets
+- Theme import/export
 
 Success Criteria:
 
-- Clear loop timing feedback
-- No impact on sequencing behavior
-
----
-
-### Expanded Performance Range
-
-Priority: Medium
-
-Goal:
-
-Support a wider range of installation and performance behaviors.
-
-Features:
-
-- BPM range: 5–400
-- Minimum pulse on-time: 5 ms
-
-Success Criteria:
-
-- Firmware validation updated
-- Browser UI updated
-- Existing behavior preserved
+- Preserve color relationships
+- Runtime theme switching
+- No firmware dependency
 
 ---
 
@@ -109,12 +168,12 @@ Planned
 
 Potential Features:
 
-- Preferences pages
-- Diagnostics pages
+- JSON configuration import/export
 - Preset management
-- Mobile optimization
-- Alternate performance views
-- Enhanced editing workflows
+- Multi-view layouts
+- Touch-first layouts
+- Accessibility improvements
+- Multi-device support
 
 ---
 
@@ -128,6 +187,7 @@ Potential Features:
 - Gestures
 - Behavior routing
 - Behavior recording
+- Behavior transformation
 
 ---
 
@@ -140,6 +200,7 @@ Potential Features:
 - Scene management
 - Scene transitions
 - Scene recall
+- Scene layering
 
 ---
 
@@ -152,6 +213,7 @@ Potential Features:
 - Multi-scene performances
 - Performance timelines
 - Automated transitions
+- Behavioral scores
 
 ---
 
@@ -162,8 +224,36 @@ Planned
 Potential Features:
 
 - Voice abstraction
+- Voice-specific curves
 - Capability mapping
-- Calibration system
+- Voice calibration
+- Voice grouping
+- Voice templates
+
+---
+
+## Visualization
+
+Planned
+
+Potential Features:
+
+- TFT Animation Module
+- Enhanced visual feedback
+- Visualization editor
+- Animation development tools
+
+---
+
+## Performance Integration
+
+Planned
+
+Potential Features:
+
+- Web MIDI
+- External controller integration
+- Expanded performance workflows
 
 ---
 
@@ -190,6 +280,8 @@ When developing BIS:
 - Maintain PlatformIO compatibility.
 - Prioritize artist workflow over architectural purity.
 - Favor reliability over cleverness.
+- Keep configuration separate from performance.
+- Keep modules self-contained.
 
 ---
 
@@ -198,8 +290,9 @@ When developing BIS:
 1. Define feature.
 2. Create implementation plan.
 3. Implement minimally.
-4. Compile.
+4. Test locally.
 5. Test on ESP32 hardware.
 6. Commit.
 7. Push to GitHub.
 8. Update CHANGELOG.md.
+9. Update ROADMAP.md when milestones change.
