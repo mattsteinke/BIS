@@ -63,6 +63,24 @@ The interface now functions more as a musical instrument control surface and les
 - Original BIS Composer-inspired configuration workflow
 - Additional UI refinement
 
+Theme system
+
+GLOBAL
+
+▼ APPEARANCE
+
+Theme Hue
+
+Theme Presets
+
+Blue
+Green
+Purple
+Amber
+Monochrome
+
+
+
 ### Future
 - TFT Animation Module
 - Web MIDI
@@ -80,6 +98,14 @@ The interface now functions more as a musical instrument control surface and les
   - `data/style.css`
   - `data/app.js`
 - Browser assets now served from LittleFS
+
+- Migrate hardcoded colors to CSS variables
+- Standardize:
+    accent
+    text
+    data
+    status
+- Use opacity variants for hierarchy
 
 ## Improved
 - Clear separation between firmware and browser application
@@ -150,12 +176,14 @@ V14 is an architectural cleanup release focused on decoupling the browser interf
 # Version Roadmap
 
 ## v15
-Preferences and configuration
 
-- Preferences panel
-- Persistent settings
-- UI workflow improvements
-- Composer-inspired configuration tools
+- Module-specific settings architecture reserved.
+- PARAMETERS will be first implementation.
+- GLOBAL will own:
+  - Pin Map
+  - MIDI Map
+  - System Settings
+- Other modules may add Settings subsections as needed.
 
 ## v16
 Visualization
