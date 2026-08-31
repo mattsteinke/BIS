@@ -1,6 +1,6 @@
 <!doctype html>
 <html>
-<h1>
+<head>
   <meta charset="utf-8">
   <title>BIS V13 UI Mockup</title>
   <link rel="stylesheet" href="style.css">
@@ -1082,26 +1082,31 @@
         <tr>
           <th>FUNCTION</th>
           <th>NOTE</th>
+          <th>IR</th>
         </tr>
 
-        <tr>
+        <>
           <td>PLAY</td>
           <td><input id="midiPlayNote" type="number" value="60" disabled></td>
+          <td><input id="irBankTrans1" type="text" value="0x00" disabled></td>
         </tr>
 
         <tr>
           <td>STOP</td>
           <td><input id="midiStopNote" type="number" value="61" disabled></td>
+          <td><input id="irBankTrans2" type="text" value="0x00" disabled></td>
         </tr>
 
         <tr>
           <td>RECORD</td>
           <td><input id="midiRecordNote" type="number" value="62" disabled></td>
+          <td><input id="irBankTrans3" type="text" value="0x00" disabled></td>
         </tr>
 
         <tr>
           <td>OVERWRITE</td>
           <td><input id="midiOverwriteNote" type="number" value="63" disabled></td>
+          <td><input id="irBankTrans4" type="text" value="0x00" disabled></td>
         </tr>
 
       </table>
@@ -1113,6 +1118,7 @@
         <tr>
           <th>MISC</th>
           <th>NOTE</th>
+        <th>IR</th>
         </tr>
 
         <tr>
@@ -1122,6 +1128,7 @@
                    value="0"
                    disabled>
           </td>
+          <td><input id="irBankTrans5" type="text" value="0x00" disabled></td>
         </tr>
         <tr>
           <td>RESET</td>
@@ -1130,6 +1137,7 @@
                    value="1"
                    disabled>
           </td>
+          <td><input id="irBankTrans6" type="text" value="0x00" disabled></td>
         </tr>
 
 
@@ -1152,27 +1160,28 @@
         <tr>
           <th>BANK</th>
           <th>NOTE</th>
+          <th>IR</th>
         </tr>
 
-        <tr><td>1</td><td><input id="midiBank1Note" type="number" value="36" disabled></td></tr>
-        <tr><td>2</td><td><input id="midiBank2Note" type="number" value="37" disabled></td></tr>
-        <tr><td>3</td><td><input id="midiBank3Note" type="number" value="38" disabled></td></tr>
-        <tr><td>4</td><td><input id="midiBank4Note" type="number" value="39" disabled></td></tr>
+        <tr><td>1</td><td><input id="midiBank1Note" type="number" value="36" disabled></td><td><input id="irBank1" type="text" value="0x00" disabled></td></tr>
+        <tr><td>2</td><td><input id="midiBank2Note" type="number" value="37" disabled></td><td><input id="irBank2" type="text" value="0x00" disabled></td></tr>
+        <tr><td>3</td><td><input id="midiBank3Note" type="number" value="38" disabled></td><td><input id="irBank3" type="text" value="0x00" disabled></td></tr>
+        <tr><td>4</td><td><input id="midiBank4Note" type="number" value="39" disabled></td><td><input id="irBank4" type="text" value="0x00" disabled></td></tr>
 
-        <tr><td>5</td><td><input id="midiBank5Note" type="number" value="40" disabled></td></tr>
-        <tr><td>6</td><td><input id="midiBank6Note" type="number" value="41" disabled></td></tr>
-        <tr><td>7</td><td><input id="midiBank7Note" type="number" value="42" disabled></td></tr>
-        <tr><td>8</td><td><input id="midiBank8Note" type="number" value="43" disabled></td></tr>
+        <tr><td>5</td><td><input id="midiBank5Note" type="number" value="40" disabled></td><td><input id="irBank5" type="text" value="0x00" disabled></td></tr>
+        <tr><td>6</td><td><input id="midiBank6Note" type="number" value="41" disabled></td><td><input id="irBank6" type="text" value="0x00" disabled></td></tr>
+        <tr><td>7</td><td><input id="midiBank7Note" type="number" value="42" disabled></td><td><input id="irBank7" type="text" value="0x00" disabled></td></tr>
+        <tr><td>8</td><td><input id="midiBank8Note" type="number" value="43" disabled></td><td><input id="irBank8" type="text" value="0x00" disabled></td></tr>
 
-        <tr><td>9</td><td><input id="midiBank9Note" type="number" value="44" disabled></td></tr>
-        <tr><td>10</td><td><input id="midiBank10Note" type="number" value="45" disabled></td></tr>
-        <tr><td>11</td><td><input id="midiBank11Note" type="number" value="46" disabled></td></tr>
-        <tr><td>12</td><td><input id="midiBank12Note" type="number" value="47" disabled></td></tr>
+        <tr><td>9</td><td><input id="midiBank9Note" type="number" value="44" disabled></td><td><input id="irBank9" type="text" value="0x00" disabled></td></tr>
+        <tr><td>10</td><td><input id="midiBank10Note" type="number" value="45" disabled></td><td><input id="irBank10" type="text" value="0x00" disabled></td></tr>
+        <tr><td>11</td><td><input id="midiBank11Note" type="number" value="46" disabled></td><td><input id="irBank11" type="text" value="0x00" disabled></td></tr>
+        <tr><td>12</td><td><input id="midiBank12Note" type="number" value="47" disabled></td><td><input id="irBank12" type="text" value="0x00" disabled></td></tr>
 
-        <tr><td>13</td><td><input id="midiBank13Note" type="number" value="48" disabled></td></tr>
-        <tr><td>14</td><td><input id="midiBank14Note" type="number" value="49" disabled></td></tr>
-        <tr><td>15</td><td><input id="midiBank15Note" type="number" value="50" disabled></td></tr>
-        <tr><td>16</td><td><input id="midiBank16Note" type="number" value="51" disabled></td></tr>
+        <tr><td>13</td><td><input id="midiBank13Note" type="number" value="48" disabled></td><td><input id="irBank13" type="text" value="0x00" disabled></td></tr>
+        <tr><td>14</td><td><input id="midiBank14Note" type="number" value="49" disabled></td><td><input id="irBank14" type="text" value="0x00" disabled></td></tr>
+        <tr><td>15</td><td><input id="midiBank15Note" type="number" value="50" disabled></td><td><input id="irBank15" type="text" value="0x00" disabled></td></tr>
+        <tr><td>16</td><td><input id="midiBank16Note" type="number" value="51" disabled></td><td><input id="irBank16" type="text" value="0x00" disabled></td></tr>
 
       </table>
 

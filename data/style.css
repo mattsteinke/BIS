@@ -29,6 +29,9 @@
   --console: #0f0;
   --console-dim: #00ff005a;
   --data-rgb: 255, 136, 0;
+  --square: #ff0090;
+  --square-dim: #ff00906d;
+  --square-dim-dim: #ff00902d;
 }
 
 h2 {
@@ -86,7 +89,7 @@ button.overwrite.active { background: var(--overwrite); color: var(--text); box-
   border-radius: 3px;
 }
 .cell.inrange { opacity: 1; }
-.cell.active { background: var(--data) !important; }
+.cell.active { background: var(--square) !important; }
 .cell.playhead {
   outline: 3px solid var(--warning);
   box-shadow: 0 0 6px var(--warning);
@@ -97,14 +100,14 @@ button.overwrite.active { background: var(--overwrite); color: var(--text); box-
   width: 80%;
   aspect-ratio: 1;
 
-  border: 1px solid var(--border-strong);
-  background: var(--text-contrast);
+  border: 2px solid var(--border);
+  background: var(--surface);
 
-  border-radius: 3px;
+  border-radius: 4px;
 }
 .outled.active {
-  background: var(--success);
-  box-shadow: 0 0 5px var(--success);
+  background: var(--square);
+  box-shadow: 0 0 5px var(--square);
 }
 #console {
   width: 100%;
@@ -308,15 +311,15 @@ button.bank {
   width: 30px;
   height: 30px;
 
-  border: 2px solid var(--border-strong);
+  border: 2px solid var(--border);
   border-radius: 4px;
 
   background: var(--surface);
 }
 
 .midi-led.active {
-  background: var(--success);
-  box-shadow: 0 0 8px var(--success);
+  background: var(--square-dim);
+  box-shadow: 0 0 8px var(--square);
 }
 
 /* ===================================================== */
@@ -378,13 +381,23 @@ td {
   border-bottom: 1px solid var(--border);
 }
 
-input[type="text"],
+input[type="text"]
+{
+  background: var(--square-dim);
+  width: 70px;
+  color: var(--text-contrast);
+  border: none;
+  padding: 4px 6px;
+  
+  font-weight: bold;
+}
 input[type="number"] {
+  width: 50px;
   background: var(--data);
   color: var(--text-contrast);
   border: none;
   padding: 4px 6px;
-  width: 60px;
+  
   font-weight: bold;
 }
 
