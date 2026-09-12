@@ -1,1301 +1,1408 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
+
 <head>
   <meta charset="utf-8">
   <title>BIS V13 UI Mockup</title>
   <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
-<div id="app">
-<h2>BIS V14 composer</h2>
+  <div id="app">
+    <h2>BIS V14 composer</h2>
 
-<!-- ===================================================== -->
-<!-- BANKS & TRANSPORT -->
-<!-- ===================================================== -->
+    <!-- ===================================================== -->
+    <!-- BANKS & TRANSPORT -->
+    <!-- ===================================================== -->
 
-<section class="panel">
+    <section class="panel">
 
-  <div class="panel-header">
-    <strong>BANKS & TRANSPORT</strong>
-  </div>
-
-  <div class="panel-body">
-
-    <div class="bank-section">
-
-      <div class="bank-column">
-        <div class="bank-row" id="bankgrid"></div>
-        <div class="bank-row"></div>
+      <div class="panel-header">
+        <strong>BANKS &amp; TRANSPORT</strong>
       </div>
 
-      <div class="transport-column">
+      <div class="panel-body">
 
-        <button
-          class="default"
-          id="playBtn"
-          onclick="s('PLAY')">
-          PLAY
-        </button>
+        <div class="bank-section">
 
-        <button
-          class="default"
-          onclick="s('STOP')">
-          STOP
-        </button>
+          <div class="bank-column">
+            <div class="bank-row" id="bankgrid"></div>
+            <div class="bank-row"></div>
+          </div>
 
-      </div>
+          <div class="transport-group">
 
-      <div class="transport-column">
+            <button type="button" class="default" id="playBtn" onclick="s('PLAY')">
+              PLAY
+            </button>
 
-        <button
-          class="record"
-          id="recordBtn"
-          onclick="s('RECORD')">
-          RECORD
-        </button>
+            <button type="button" class="record" id="recordBtn" onclick="s('RECORD')">
+              RECORD
+            </button>
 
-        <button
-          class="overwrite"
-          id="overwriteBtn"
-          onclick="s('OVERWRITE')">
-          OVERWRITE
-        </button>
+            <button type="button" class="default" onclick="s('STOP')">
+              STOP
+            </button>
 
-      </div>
-    </div>
+            <button type="button" class="overwrite" id="overwriteBtn" onclick="s('OVERWRITE')">
+              OVERWRITE
+            </button>
 
-  </div>
-
-</section>
-
-<!-- ===================================================== -->
-<!-- PARAMETERS -->
-<!-- ===================================================== -->
-
-<section class="panel">
-
-  <div class="panel-header">
-    <strong>PARAMETERS</strong>
-  </div>
-
-  <div class="panel-body">
-
-    <div class="parameter-grid">
-
-      <!-- BPM / CCB -->
-
-      <div class="parameter-cell">
-
-        <div class="parameter-row">
-
-          <span class="parameter-name">BPM</span>
-
-          <input
-            id="bpm"
-            type="range"
-            min="20"
-            max="240"
-            value="120"
-            oninput="bpmv.textContent=this.value">
-
-          <span id="bpmv" class="parameter-value">
-            120
-          </span>
-
+          </div>
         </div>
 
       </div>
 
-      <div class="parameter-cell future-param">
+    </section>
 
-        <div class="parameter-row">
-
-          <span class="parameter-name">CCB</span>
-
-          <input type="range" disabled>
-
-          <span class="parameter-value">
-            0
-          </span>
-
-        </div>
-
-      </div>
-
-      <!-- ONTIME / CCC -->
-
-      <div class="parameter-cell">
-
-        <div class="parameter-row">
-
-          <span class="parameter-name">ONTIME</span>
-
-          <input
-            id="ont"
-            type="range"
-            min="10"
-            max="1000"
-            value="50"
-            oninput="ontv.textContent=this.value">
-
-          <span id="ontv" class="parameter-value">
-            50
-          </span>
-
-        </div>
-
-      </div>
-
-      <div class="parameter-cell future-param">
-
-        <div class="parameter-row">
-
-          <span class="parameter-name">CCC</span>
-
-          <input type="range" disabled>
-
-          <span class="parameter-value">
-            0
-          </span>
-
-        </div>
-
-      </div>
-
-      <!-- DRUNK / CCD -->
-
-      <div class="parameter-cell">
-
-        <div class="parameter-row">
-
-          <span class="parameter-name">DRUNK</span>
-
-          <input
-            id="dr"
-            type="range"
-            min="0"
-            max="100"
-            value="0"
-            oninput="drv.textContent=this.value">
-
-          <span id="drv" class="parameter-value">
-            0
-          </span>
-
-        </div>
-
-      </div>
-
-      <div class="parameter-cell future-param">
-
-        <div class="parameter-row">
-
-          <span class="parameter-name">CCD</span>
-
-          <input type="range" disabled>
-
-          <span class="parameter-value">
-            0
-          </span>
-
-        </div>
-
-      </div>
-
-      <!-- PROB / CCE -->
-
-      <div class="parameter-cell">
-
-        <div class="parameter-row">
-
-          <span class="parameter-name">PROB</span>
-
-          <input
-            id="pr"
-            type="range"
-            min="0"
-            max="100"
-            value="100"
-            oninput="prv.textContent=this.value">
-
-          <span id="prv" class="parameter-value">
-            100
-          </span>
-
-        </div>
-
-      </div>
-
-      <div class="parameter-cell future-param">
-
-        <div class="parameter-row">
-
-          <span class="parameter-name">CCE</span>
-
-          <input type="range" disabled>
-
-          <span class="parameter-value">
-            0
-          </span>
-
-        </div>
-
-      </div>
-
-      <!-- STEPS / CCF -->
-
-      <div class="parameter-cell">
-
-        <div class="parameter-row">
-
-          <span class="parameter-name">STEPS</span>
-
-          <input
-            id="st"
-            type="range"
-            min="1"
-            max="25"
-            value="25">
-
-          <span id="stv" class="parameter-value">
-            25
-          </span>
-
-        </div>
-
-      </div>
-
-      <div class="parameter-cell future-param">
-
-        <div class="parameter-row">
-
-          <span class="parameter-name">CCF</span>
-
-          <input type="range" disabled>
-
-          <span class="parameter-value">
-            0
-          </span>
-
-        </div>
-
-      </div>
-
-      <!-- SCRUB / CCG -->
-
-      <div class="parameter-cell">
-
-        <div class="parameter-row">
-
-          <span class="parameter-name">SCRUB</span>
-
-          <input
-            id="sc"
-            type="range"
-            min="0"
-            max="24"
-            value="0">
-
-          <span id="scv" class="parameter-value">
-            0
-          </span>
-
-        </div>
-
-      </div>
-
-      <div class="parameter-cell future-param">
-
-        <div class="parameter-row">
-
-          <span class="parameter-name">CCG</span>
-
-          <input type="range" disabled>
-
-          <span class="parameter-value">
-            0
-          </span>
-
-        </div>
-
-      </div>
-
-      <!-- CCA / CCH -->
-
-      <div class="parameter-cell future-param">
-
-        <div class="parameter-row">
-
-          <span class="parameter-name">CCA</span>
-
-          <input type="range" disabled>
-
-          <span class="parameter-value">
-            0
-          </span>
-
-        </div>
-
-      </div>
-
-      <div class="parameter-cell future-param">
-
-        <div class="parameter-row">
-
-          <span class="parameter-name">CCH</span>
-
-          <input type="range" disabled>
-
-          <span class="parameter-value">
-            0
-          </span>
-
-        </div>
-
-      </div>
-
-    </div>
-<details class="module-settings">
-
-  <summary>PARAMETER CURVES</summary>
-
-  <div class="settings-body">
-
-    <!-- BPM CURVE -->
-
-    <div class="setting-group">
-
-      <div class="setting-title">
-        BPM
-      </div>
-
-      <div class="setting-grid">
-
-        <div class="setting-field">
-          <label>INIT</label>
-          <input id="bpmCurveInit" type="number" value="120" disabled>
-        </div>
-
-        <div class="setting-field">
-          <label>MID</label>
-          <input id="bpmCurveMid" type="number" value="240" disabled>
-        </div>
-
-        <div class="setting-field">
-          <label>MAX</label>
-          <input id="bpmCurveMax" type="number" value="480" disabled>
-        </div>
-
-      </div>
-
-    </div>
-    <!-- END BPM CURVE -->
-
-    <!-- CCB CURVE -->
-
-    <div class="setting-group">
-
-      <div class="setting-title">
-        CCB
-      </div>
-
-      <div class="setting-grid">
-
-        <div class="setting-field">
-          <label>INIT</label>
-          <input id="ccbCurveInit" type="number" value="9" disabled>
-        </div>
-
-        <div class="setting-field">
-          <label>MID</label>
-          <input id="ccbCurveMid" type="number" value="100" disabled>
-        </div>
-
-        <div class="setting-field">
-          <label>MAX</label>
-          <input id="ccbCurveMax" type="number" value="200" disabled>
-        </div>
-
-      </div>
-
-    </div>
-    <!-- END CCB CURVE -->
-        <!-- ONTIME CURVE -->
-
-    <div class="setting-group">
-
-      <div class="setting-title">
-        ONTIME
-      </div>
-
-      <div class="setting-grid">
-
-        <div class="setting-field">
-          <label>INIT</label>
-          <input id="ontimeCurveInit" type="number" value="120" disabled>
-        </div>
-
-        <div class="setting-field">
-          <label>MID</label>
-          <input id="ontimeCurveMid" type="number" value="240" disabled>
-        </div>
-
-        <div class="setting-field">
-          <label>MAX</label>
-          <input id="ontimeCurveMax" type="number" value="480" disabled>
-        </div>
-
-      </div>
-
-    </div>
-    <!-- END ONTIME CURVE -->
-
-    <!-- CCC CURVE -->
-
-    <div class="setting-group">
-
-      <div class="setting-title">
-        CCC
-      </div>
-
-      <div class="setting-grid">
-
-        <div class="setting-field">
-          <label>INIT</label>
-          <input id="cccCurveInit" type="number" value="9" disabled>
-        </div>
-
-        <div class="setting-field">
-          <label>MID</label>
-          <input id="cccCurveMid" type="number" value="50" disabled>
-        </div>
-
-        <div class="setting-field">
-          <label>MAX</label>
-          <input id="cccCurveMax" type="number" value="200" disabled>
-        </div>
-
-      </div>
-
-    </div>
-      <!-- END CCC CURVE -->
-
-      <!-- DRUNK CURVE -->
-
-    <div class="setting-group">
-
-      <div class="setting-title">
-        DRUNK
-      </div>
-
-      <div class="setting-grid">
-
-        <div class="setting-field">
-          <label>INIT</label>
-          <input id="drunkCurveInit" type="number" value="100" disabled>
-        </div>
-
-        <div class="setting-field">
-          <label>MID</label>
-          <input id="drunkCurveMid" type="number" value="200" disabled>
-        </div>
-
-        <div class="setting-field">
-          <label>MAX</label>
-          <input id="drunkCurveMax" type="number" value="400" disabled>
-        </div>
-
-      </div>
-
-    </div>
-    <!-- END DRUNK CURVE -->
-
-    <!-- CCD CURVE -->
-
-    <div class="setting-group">
-
-      <div class="setting-title">
-        CCD
-      </div>
-
-      <div class="setting-grid">
-
-        <div class="setting-field">
-          <label>INIT</label>
-          <input id="ccdCurveInit" type="number" value="9" disabled>
-        </div>
-
-        <div class="setting-field">
-          <label>MID</label>
-          <input id="ccdCurveMid" type="number" value="100" disabled>
-        </div>
-
-        <div class="setting-field">
-          <label>MAX</label>
-          <input id="ccdCurveMax" type="number" value="200" disabled>
-        </div>
-
-      </div>
-
-    </div>
-    <!-- END CCD CURVE -->
-      <!-- PROB CURVE -->
-
-    <div class="setting-group">
-
-      <div class="setting-title">
-        PROB
-      </div>
-
-      <div class="setting-grid">
-
-        <div class="setting-field">
-          <label>INIT</label>
-          <input id="probCurveInit" type="number" value="0" disabled>
-        </div>
-
-        <div class="setting-field">
-          <label>MID</label>
-          <input id="probCurveMid" type="number" value="100" disabled>
-        </div>
-
-        <div class="setting-field">
-          <label>MAX</label>
-          <input id="probCurveMax" type="number" value="480" disabled>
-        </div>
-
-      </div>
-
-    </div>
-    <!-- END PROB CURVE -->
-
-    <!-- CCE CURVE -->
-
-    <div class="setting-group">
-
-      <div class="setting-title">
-        CCE
-      </div>
-
-      <div class="setting-grid">
-
-        <div class="setting-field">
-          <label>INIT</label>
-          <input id="cceCurveInit" type="number" value="9" disabled>
-        </div>
-
-        <div class="setting-field">
-          <label>MID</label>
-          <input id="cceCurveMid" type="number" value="100" disabled>
-        </div>
-
-        <div class="setting-field">
-          <label>MAX</label>
-          <input id="cceCurveMax" type="number" value="200" disabled>
-        </div>
-
-      </div>
-
-    </div>
-    <!-- END CCE CURVE -->
-
-      <!-- STEPS CURVE -->
-
-    <div class="setting-group">
-
-      <div class="setting-title">
-        STEPS
-      </div>
-
-      <div class="setting-grid">
-
-        <div class="setting-field">
-          <label>INIT</label>
-          <input id="stepsCurveInit" type="number" value="120" disabled>
-        </div>
-
-        <div class="setting-field">
-          <label>MID</label>
-          <input id="stepsCurveMid" type="number" value="240" disabled>
-        </div>
-
-        <div class="setting-field">
-          <label>MAX</label>
-          <input id="stepsCurveMax" type="number" value="480" disabled>
-        </div>
-
-      </div>
-
-    </div>
-    <!-- END STEPS CURVE -->
-
-    <!-- CCF CURVE -->
-
-    <div class="setting-group">
-
-      <div class="setting-title">
-        CCF
-      </div>
-
-      <div class="setting-grid">
-
-        <div class="setting-field">
-          <label>INIT</label>
-          <input id="ccfCurveInit" type="number" value="9" disabled>
-        </div>
-
-        <div class="setting-field">
-          <label>MID</label>
-          <input id="ccfCurveMid" type="number" value="100" disabled>
-        </div>
-
-        <div class="setting-field">
-          <label>MAX</label>
-          <input id="ccfCurveMax" type="number" value="200" disabled>
-        </div>
-
-      </div>
-
-    </div>
-    <!-- END CCF CURVE -->
-      <!-- SCRUB CURVE -->
-
-    <div class="setting-group">
-
-      <div class="setting-title">
-        SCRUB
-      </div>
-
-      <div class="setting-grid">
-
-        <div class="setting-field">
-          <label>INIT</label>
-          <input id="scrubCurveInit" type="number" value="120" disabled>
-        </div>
-
-        <div class="setting-field">
-          <label>MID</label>
-          <input id="scrubCurveMid" type="number" value="240" disabled>
-        </div>
-
-        <div class="setting-field">
-          <label>MAX</label>
-          <input id="scrubCurveMax" type="number" value="480" disabled>
-        </div>
-
-      </div>
-
-    </div>
-    <!-- END SCRUB CURVE -->
-
-    <!-- CCG CURVE -->
-
-    <div class="setting-group">
-
-      <div class="setting-title">
-        CCG
-      </div>
-
-      <div class="setting-grid">
-
-        <div class="setting-field">
-          <label>INIT</label>
-          <input id="ccgCurveInit" type="number" value="9" disabled>
-        </div>
-
-        <div class="setting-field">
-          <label>MID</label>
-          <input id="ccgCurveMid" type="number" value="100" disabled>
-        </div>
-
-        <div class="setting-field">
-          <label>MAX</label>
-          <input id="ccgCurveMax" type="number" value="200" disabled>
-        </div>
-
-      </div>
-
-    </div>
-    <!-- END CCG CURVE -->
-    <!-- CCA CURVE -->
-
-    <div class="setting-group">
-
-      <div class="setting-title">
-        CCA
-      </div>
-
-      <div class="setting-grid">
-
-        <div class="setting-field">
-          <label>INIT</label>
-          <input id="ccaCurveInit" type="number" value="9" disabled>
-        </div>
-
-        <div class="setting-field">
-          <label>MID</label>
-          <input id="ccaCurveMid" type="number" value="100" disabled>
-        </div>
-
-        <div class="setting-field">
-          <label>MAX</label>
-          <input id="ccaCurveMax" type="number" value="200" disabled>
-        </div>
-
-      </div>
-
-    </div>
-    <!-- END CCA CURVE -->
-    <!-- CCH CURVE -->
-
-    <div class="setting-group">
-
-      <div class="setting-title">
-        CCH
-      </div>
-
-      <div class="setting-grid">
-
-        <div class="setting-field">
-          <label>INIT</label>
-          <input id="cchCurveInit" type="number" value="9" disabled>
-        </div>
-
-        <div class="setting-field">
-          <label>MID</label>
-          <input id="cchCurveMid" type="number" value="100" disabled>
-        </div>
-
-        <div class="setting-field">
-          <label>MAX</label>
-          <input id="cchCurveMax" type="number" value="200" disabled>
-        </div>
-
-      </div>
-
-    </div>
-    <!-- END CCH CURVE -->
-
-  </div>
-</details>
-<details class="module-settings">
-  <summary>VOICE CURVES</summary>
-  <div class="settings-body">
-        <!-- V1 CURVE CURVE -->
-
-    <div class="setting-group">
-
-      <div class="setting-title">
-        V1
-      </div>
-
-      <div class="setting-grid">
-
-        <div class="setting-field">
-          <label>INIT</label>
-          <input id="v1CurveInit" type="number" value="9" disabled>
-        </div>
-
-        <div class="setting-field">
-          <label>MID</label>
-          <input id="v1CurveMid" type="number" value="100" disabled>
-        </div>
-
-        <div class="setting-field">
-          <label>MAX</label>
-          <input id="v1CurveMax" type="number" value="200" disabled>
-        </div>
-
-      </div>
-
-    </div>
-    <!-- END V1 CURVE -->
-    <!-- V2 CURVE -->
-
-    <div class="setting-group">
-
-      <div class="setting-title">
-        V2
-      </div>
-
-      <div class="setting-grid">
-
-        <div class="setting-field">
-          <label>INIT</label>
-          <input id="v2CurveInit" type="number" value="9" disabled>
-        </div>
-
-        <div class="setting-field">
-          <label>MID</label>
-          <input id="v2CurveMid" type="number" value="100" disabled>
-        </div>
-
-        <div class="setting-field">
-          <label>MAX</label>
-          <input id="v2CurveMax" type="number" value="200" disabled>
-        </div>
-
-      </div>
-
-    </div>
-    <!-- END V2 CURVE -->
-    <!-- V3 CURVE CURVE -->
-
-    <div class="setting-group">
-
-      <div class="setting-title">
-        V3
-      </div>
-
-      <div class="setting-grid">
-
-        <div class="setting-field">
-          <label>INIT</label>
-          <input id="v3CurveInit" type="number" value="9" disabled>
-        </div>
-
-        <div class="setting-field">
-          <label>MID</label>
-          <input id="v3CurveMid" type="number" value="100" disabled>
-        </div>
-
-        <div class="setting-field">
-          <label>MAX</label>
-          <input id="v3CurveMax" type="number" value="200" disabled>
-        </div>
-
-      </div>
-
-    </div>
-    <!-- END V3 CURVE -->
-    <!-- V4 CURVE -->
-
-    <div class="setting-group">
-
-      <div class="setting-title">
-        V4
-      </div>
-
-      <div class="setting-grid">
-
-        <div class="setting-field">
-          <label>INIT</label>
-          <input id="v4CurveInit" type="number" value="9" disabled>
-        </div>
-
-        <div class="setting-field">
-          <label>MID</label>
-          <input id="v4CurveMid" type="number" value="100" disabled>
-        </div>
-
-        <div class="setting-field">
-          <label>MAX</label>
-          <input id="v4CurveMax" type="number" value="200" disabled>
-        </div>
-
-      </div>
-
-    </div>
-    <!-- END V4 CURVE -->
-    <!-- V5 CURVE -->
-
-    <div class="setting-group">
-
-      <div class="setting-title">
-        V5
-      </div>
-
-      <div class="setting-grid">
-
-        <div class="setting-field">
-          <label>INIT</label>
-          <input id="v5CurveInit" type="number" value="9" disabled>
-        </div>
-
-        <div class="setting-field">
-          <label>MID</label>
-          <input id="v5CurveMid" type="number" value="100" disabled>
-        </div>
-
-        <div class="setting-field">
-          <label>MAX</label>
-          <input id="v5CurveMax" type="number" value="200" disabled>
-        </div>
-
-      </div>
-
-    </div>
-    <!-- END V5 CURVE -->
-     <!-- V6 CURVE -->
-
-    <div class="setting-group">
-
-      <div class="setting-title">
-        V6
-      </div>
-
-      <div class="setting-grid">
-
-        <div class="setting-field">
-          <label>INIT</label>
-          <input id="v6CurveInit" type="number" value="9" disabled>
-        </div>
-
-        <div class="setting-field">
-          <label>MID</label>
-          <input id="v6CurveMid" type="number" value="100" disabled>
-        </div>
-
-        <div class="setting-field">
-          <label>MAX</label>
-          <input id="v6CurveMax" type="number" value="200" disabled>
-        </div>
-
-      </div>
-
-    </div>
-    <!-- END V6 CURVE -->
-     <!-- V7 CURVE -->
-
-    <div class="setting-group">
-
-      <div class="setting-title">
-        V7
-      </div>
-
-      <div class="setting-grid">
-
-        <div class="setting-field">
-          <label>INIT</label>
-          <input id="v7CurveInit" type="number" value="2" disabled>
-        </div>
-
-        <div class="setting-field">
-          <label>MID</label>
-          <input id="v7CurveMid" type="number" value="50" disabled>
-        </div>
-
-        <div class="setting-field">
-          <label>MAX</label>
-          <input id="v7CurveMax" type="number" value="200" disabled>
-        </div>
-
-      </div>
-
-    </div>
-    <!-- END V7 CURVE -->
-      </div>
-</details>
-  </div>
-
-</section>
-
-
-<!-- ===================================================== -->
-<!-- SEQUENCER -->
-<!-- ===================================================== -->
-
-<section class="panel">
-
-  <div class="panel-header">
-
-    <strong>SEQUENCER</strong>
-
-    <button
-      class="module-action"
-      id="clearGridBtn">
-
-      RESET
-
-    </button>
-
-  </div>
-
-  <div class="panel-body">
-
-    <div id="g"></div>
-
-  </div>
-
-</section>
-
-<!-- ===================================================== -->
-<!-- GLOBAL-->
-<!-- ===================================================== -->
-
-<section class="panel">
-
-  <div class="panel-header">
-    <strong>GLOBAL</strong>
-  </div>
-
-  <div class="panel-body">
-
-    <div class="meter-row">
-
-      <span class="meter-label">
-        OUTPUTS
-      </span>
-
-      <div id="outs"></div>
-
-      <div class="midi-status">
-        <span>MIDI</span>
-        <div
-          id="midiLed"
-          class="midi-led">
-        </div>
-      </div>
-
-    </div>
-    <br><br>
-    <div class="console-label">
-    <strong>CONSOLE</strong>
-  </div>
-
-
-
-    <textarea
-      id="console"
-      readonly>
-    </textarea>
-
-
-<details class="module-settings">
-
-  <summary>MIDI MAP</summary>
-
-  <div class="settings-body settings-3col">
-
-    <!-- ======================================== -->
-    <!-- TRANSPORT -->
-    <!-- ======================================== -->
-
-    <div class="setting-group">
-
-      <div class="setting-title">
-        TRANSPORT
-      </div>
-
-      <table class="resource-table">
-
-        <tr>
-          <th>FUNCTION</th>
-          <th>NOTE</th>
-          <th>IR</th>
-        </tr>
-
-        <>
-          <td>PLAY</td>
-          <td><input id="midiPlayNote" type="number" value="60" disabled></td>
-          <td><input id="irBankTrans1" type="text" value="0x00" disabled></td>
-        </tr>
-
-        <tr>
-          <td>STOP</td>
-          <td><input id="midiStopNote" type="number" value="61" disabled></td>
-          <td><input id="irBankTrans2" type="text" value="0x00" disabled></td>
-        </tr>
-
-        <tr>
-          <td>RECORD</td>
-          <td><input id="midiRecordNote" type="number" value="62" disabled></td>
-          <td><input id="irBankTrans3" type="text" value="0x00" disabled></td>
-        </tr>
-
-        <tr>
-          <td>OVERWRITE</td>
-          <td><input id="midiOverwriteNote" type="number" value="63" disabled></td>
-          <td><input id="irBankTrans4" type="text" value="0x00" disabled></td>
-        </tr>
-
-      </table>
-
-      <br>
-
-      <table class="resource-table">
-
-        <tr>
-          <th>MISC</th>
-          <th>NOTE</th>
-        <th>IR</th>
-        </tr>
-
-        <tr>
-          <td>TEMPO ONTIME SYNC</td>
-          <td>
-            <input id="midiTempoOntimeSyncNote" type="number"
-                   value="0"
-                   disabled>
-          </td>
-          <td><input id="irBankTrans5" type="text" value="0x00" disabled></td>
-        </tr>
-        <tr>
-          <td>RESET</td>
-          <td>
-            <input id="midiResetNote" type="number"
-                   value="1"
-                   disabled>
-          </td>
-          <td><input id="irBankTrans6" type="text" value="0x00" disabled></td>
-        </tr>
-
-
-      </table>
-
-    </div>
-
-    <!-- ======================================== -->
-    <!-- BANKS -->
-    <!-- ======================================== -->
-
-    <div class="setting-group">
-
-      <div class="setting-title">
-        BANKS
-      </div>
-
-      <table class="resource-table">
-
-        <tr>
-          <th>BANK</th>
-          <th>NOTE</th>
-          <th>IR</th>
-        </tr>
-
-        <tr><td>1</td><td><input id="midiBank1Note" type="number" value="36" disabled></td><td><input id="irBank1" type="text" value="0x00" disabled></td></tr>
-        <tr><td>2</td><td><input id="midiBank2Note" type="number" value="37" disabled></td><td><input id="irBank2" type="text" value="0x00" disabled></td></tr>
-        <tr><td>3</td><td><input id="midiBank3Note" type="number" value="38" disabled></td><td><input id="irBank3" type="text" value="0x00" disabled></td></tr>
-        <tr><td>4</td><td><input id="midiBank4Note" type="number" value="39" disabled></td><td><input id="irBank4" type="text" value="0x00" disabled></td></tr>
-
-        <tr><td>5</td><td><input id="midiBank5Note" type="number" value="40" disabled></td><td><input id="irBank5" type="text" value="0x00" disabled></td></tr>
-        <tr><td>6</td><td><input id="midiBank6Note" type="number" value="41" disabled></td><td><input id="irBank6" type="text" value="0x00" disabled></td></tr>
-        <tr><td>7</td><td><input id="midiBank7Note" type="number" value="42" disabled></td><td><input id="irBank7" type="text" value="0x00" disabled></td></tr>
-        <tr><td>8</td><td><input id="midiBank8Note" type="number" value="43" disabled></td><td><input id="irBank8" type="text" value="0x00" disabled></td></tr>
-
-        <tr><td>9</td><td><input id="midiBank9Note" type="number" value="44" disabled></td><td><input id="irBank9" type="text" value="0x00" disabled></td></tr>
-        <tr><td>10</td><td><input id="midiBank10Note" type="number" value="45" disabled></td><td><input id="irBank10" type="text" value="0x00" disabled></td></tr>
-        <tr><td>11</td><td><input id="midiBank11Note" type="number" value="46" disabled></td><td><input id="irBank11" type="text" value="0x00" disabled></td></tr>
-        <tr><td>12</td><td><input id="midiBank12Note" type="number" value="47" disabled></td><td><input id="irBank12" type="text" value="0x00" disabled></td></tr>
-
-        <tr><td>13</td><td><input id="midiBank13Note" type="number" value="48" disabled></td><td><input id="irBank13" type="text" value="0x00" disabled></td></tr>
-        <tr><td>14</td><td><input id="midiBank14Note" type="number" value="49" disabled></td><td><input id="irBank14" type="text" value="0x00" disabled></td></tr>
-        <tr><td>15</td><td><input id="midiBank15Note" type="number" value="50" disabled></td><td><input id="irBank15" type="text" value="0x00" disabled></td></tr>
-        <tr><td>16</td><td><input id="midiBank16Note" type="number" value="51" disabled></td><td><input id="irBank16" type="text" value="0x00" disabled></td></tr>
-
-      </table>
-
-    </div>
-
-    <!-- ======================================== -->
+    <!-- ===================================================== -->
     <!-- PARAMETERS -->
-    <!-- ======================================== -->
+    <!-- ===================================================== -->
 
-    <div class="setting-group">
+    <section class="panel">
 
-      <div class="setting-title">
-        PARAMETERS
+      <div class="panel-header">
+        <strong>PARAMETERS</strong>
       </div>
 
-      <table class="resource-table">
+      <div class="panel-body">
 
-        <tr>
-          <th>PARAM</th>
-          <th>CC</th>
-        </tr>
+        <div class="parameter-grid">
 
-        <tr><td>BPM</td><td><input id="midiBpmCc" type="number" value="10" disabled></td></tr>
-        <tr><td>ONTIME</td><td><input id="midiOntimeCc" type="number" value="11" disabled></td></tr>
-        <tr><td>DRUNK</td><td><input id="midiDrunkCc" type="number" value="12" disabled></td></tr>
-        <tr><td>PROB</td><td><input id="midiProbCc" type="number" value="13" disabled></td></tr>
-        <tr><td>STEPS</td><td><input id="midiStepsCc" type="number" value="14" disabled></td></tr>
-        <tr><td>SCRUB</td><td><input id="midiScrubCc" type="number" value="15" disabled></td></tr>
+          <!-- BPM / CCB -->
 
-        <tr><td>CCA</td><td><input id="midiCcaCc" type="number" value="20" disabled></td></tr>
-        <tr><td>CCB</td><td><input id="midiCcbCc" type="number" value="21" disabled></td></tr>
-        <tr><td>CCC</td><td><input id="midiCccCc" type="number" value="22" disabled></td></tr>
-        <tr><td>CCD</td><td><input id="midiCcdCc" type="number" value="23" disabled></td></tr>
-        <tr><td>CCE</td><td><input id="midiCceCc" type="number" value="24" disabled></td></tr>
-        <tr><td>CCF</td><td><input id="midiCcfCc" type="number" value="25" disabled></td></tr>
-        <tr><td>CCG</td><td><input id="midiCcgCc" type="number" value="26" disabled></td></tr>
-        <tr><td>CCH</td><td><input id="midiCchCc" type="number" value="27" disabled></td></tr>
+          <div class="parameter-cell">
 
-      </table>
+            <div class="parameter-row">
 
-    </div>
+              <span class="parameter-name">BPM</span>
 
+              <input id="bpm" type="range" min="20" max="240" value="120" oninput="bpmv.textContent=this.value">
+
+              <span id="bpmv" class="parameter-value">
+                120
+              </span>
+
+            </div>
+
+          </div>
+
+          <div class="parameter-cell future-param">
+
+            <div class="parameter-row">
+
+              <span class="parameter-name">CCB</span>
+
+              <input type="range" disabled>
+
+              <span class="parameter-value">
+                0
+              </span>
+
+            </div>
+
+          </div>
+
+          <!-- ONTIME / CCC -->
+
+          <div class="parameter-cell">
+
+            <div class="parameter-row">
+
+              <span class="parameter-name">ONTIME</span>
+
+              <input id="ont" type="range" min="10" max="1000" value="50" oninput="ontv.textContent=this.value">
+
+              <span id="ontv" class="parameter-value">
+                50
+              </span>
+
+            </div>
+
+          </div>
+
+          <div class="parameter-cell future-param">
+
+            <div class="parameter-row">
+
+              <span class="parameter-name">CCC</span>
+
+              <input type="range" disabled>
+
+              <span class="parameter-value">
+                0
+              </span>
+
+            </div>
+
+          </div>
+
+          <!-- DRUNK / CCD -->
+
+          <div class="parameter-cell">
+
+            <div class="parameter-row">
+
+              <span class="parameter-name">DRUNK</span>
+
+              <input id="dr" type="range" min="0" max="100" value="0" oninput="drv.textContent=this.value">
+
+              <span id="drv" class="parameter-value">
+                0
+              </span>
+
+            </div>
+
+          </div>
+
+          <div class="parameter-cell future-param">
+
+            <div class="parameter-row">
+
+              <span class="parameter-name">CCD</span>
+
+              <input type="range" disabled>
+
+              <span class="parameter-value">
+                0
+              </span>
+
+            </div>
+
+          </div>
+
+          <!-- PROB / CCE -->
+
+          <div class="parameter-cell">
+
+            <div class="parameter-row">
+
+              <span class="parameter-name">PROB</span>
+
+              <input id="pr" type="range" min="0" max="100" value="100" oninput="prv.textContent=this.value">
+
+              <span id="prv" class="parameter-value">
+                100
+              </span>
+
+            </div>
+
+          </div>
+
+          <div class="parameter-cell future-param">
+
+            <div class="parameter-row">
+
+              <span class="parameter-name">CCE</span>
+
+              <input type="range" disabled>
+
+              <span class="parameter-value">
+                0
+              </span>
+
+            </div>
+
+          </div>
+
+          <!-- STEPS / CCF -->
+
+          <div class="parameter-cell">
+
+            <div class="parameter-row">
+
+              <span class="parameter-name">STEPS</span>
+
+              <input id="st" type="range" min="1" max="25" value="25">
+
+              <span id="stv" class="parameter-value">
+                25
+              </span>
+
+            </div>
+
+          </div>
+
+          <div class="parameter-cell future-param">
+
+            <div class="parameter-row">
+
+              <span class="parameter-name">CCF</span>
+
+              <input type="range" disabled>
+
+              <span class="parameter-value">
+                0
+              </span>
+
+            </div>
+
+          </div>
+
+          <!-- SCRUB / CCG -->
+
+          <div class="parameter-cell">
+
+            <div class="parameter-row">
+
+              <span class="parameter-name">SCRUB</span>
+
+              <input id="sc" type="range" min="0" max="24" value="0">
+
+              <span id="scv" class="parameter-value">
+                0
+              </span>
+
+            </div>
+
+          </div>
+
+          <div class="parameter-cell future-param">
+
+            <div class="parameter-row">
+
+              <span class="parameter-name">CCG</span>
+
+              <input type="range" disabled>
+
+              <span class="parameter-value">
+                0
+              </span>
+
+            </div>
+
+          </div>
+
+          <!-- CCA / CCH -->
+
+          <div class="parameter-cell future-param">
+
+            <div class="parameter-row">
+
+              <span class="parameter-name">CCA</span>
+
+              <input type="range" disabled>
+
+              <span class="parameter-value">
+                0
+              </span>
+
+            </div>
+
+          </div>
+
+          <div class="parameter-cell future-param">
+
+            <div class="parameter-row">
+
+              <span class="parameter-name">CCH</span>
+
+              <input type="range" disabled>
+
+              <span class="parameter-value">
+                0
+              </span>
+
+            </div>
+
+          </div>
+
+        </div>
+        <details class="module-settings">
+
+          <summary>PARAMETER CURVES</summary>
+
+          <div class="settings-body">
+
+            <!-- BPM CURVE -->
+
+            <div class="setting-group">
+
+              <div class="setting-title">
+                BPM
+              </div>
+
+              <div class="setting-grid">
+
+                <div class="setting-field">
+                  <label>INIT</label>
+                  <input id="bpmCurveInit" type="number" value="120" disabled>
+                </div>
+
+                <div class="setting-field">
+                  <label>MID</label>
+                  <input id="bpmCurveMid" type="number" value="240" disabled>
+                </div>
+
+                <div class="setting-field">
+                  <label>MAX</label>
+                  <input id="bpmCurveMax" type="number" value="480" disabled>
+                </div>
+
+              </div>
+
+            </div>
+            <!-- END BPM CURVE -->
+
+            <!-- CCB CURVE -->
+
+            <div class="setting-group">
+
+              <div class="setting-title">
+                CCB
+              </div>
+
+              <div class="setting-grid">
+
+                <div class="setting-field">
+                  <label>INIT</label>
+                  <input id="ccbCurveInit" type="number" value="9" disabled>
+                </div>
+
+                <div class="setting-field">
+                  <label>MID</label>
+                  <input id="ccbCurveMid" type="number" value="100" disabled>
+                </div>
+
+                <div class="setting-field">
+                  <label>MAX</label>
+                  <input id="ccbCurveMax" type="number" value="200" disabled>
+                </div>
+
+              </div>
+
+            </div>
+            <!-- END CCB CURVE -->
+            <!-- ONTIME CURVE -->
+
+            <div class="setting-group">
+
+              <div class="setting-title">
+                ONTIME
+              </div>
+
+              <div class="setting-grid">
+
+                <div class="setting-field">
+                  <label>INIT</label>
+                  <input id="ontimeCurveInit" type="number" value="120" disabled>
+                </div>
+
+                <div class="setting-field">
+                  <label>MID</label>
+                  <input id="ontimeCurveMid" type="number" value="240" disabled>
+                </div>
+
+                <div class="setting-field">
+                  <label>MAX</label>
+                  <input id="ontimeCurveMax" type="number" value="480" disabled>
+                </div>
+
+              </div>
+
+            </div>
+            <!-- END ONTIME CURVE -->
+
+            <!-- CCC CURVE -->
+
+            <div class="setting-group">
+
+              <div class="setting-title">
+                CCC
+              </div>
+
+              <div class="setting-grid">
+
+                <div class="setting-field">
+                  <label>INIT</label>
+                  <input id="cccCurveInit" type="number" value="9" disabled>
+                </div>
+
+                <div class="setting-field">
+                  <label>MID</label>
+                  <input id="cccCurveMid" type="number" value="50" disabled>
+                </div>
+
+                <div class="setting-field">
+                  <label>MAX</label>
+                  <input id="cccCurveMax" type="number" value="200" disabled>
+                </div>
+
+              </div>
+
+            </div>
+            <!-- END CCC CURVE -->
+
+            <!-- DRUNK CURVE -->
+
+            <div class="setting-group">
+
+              <div class="setting-title">
+                DRUNK
+              </div>
+
+              <div class="setting-grid">
+
+                <div class="setting-field">
+                  <label>INIT</label>
+                  <input id="drunkCurveInit" type="number" value="100" disabled>
+                </div>
+
+                <div class="setting-field">
+                  <label>MID</label>
+                  <input id="drunkCurveMid" type="number" value="200" disabled>
+                </div>
+
+                <div class="setting-field">
+                  <label>MAX</label>
+                  <input id="drunkCurveMax" type="number" value="400" disabled>
+                </div>
+
+              </div>
+
+            </div>
+            <!-- END DRUNK CURVE -->
+
+            <!-- CCD CURVE -->
+
+            <div class="setting-group">
+
+              <div class="setting-title">
+                CCD
+              </div>
+
+              <div class="setting-grid">
+
+                <div class="setting-field">
+                  <label>INIT</label>
+                  <input id="ccdCurveInit" type="number" value="9" disabled>
+                </div>
+
+                <div class="setting-field">
+                  <label>MID</label>
+                  <input id="ccdCurveMid" type="number" value="100" disabled>
+                </div>
+
+                <div class="setting-field">
+                  <label>MAX</label>
+                  <input id="ccdCurveMax" type="number" value="200" disabled>
+                </div>
+
+              </div>
+
+            </div>
+            <!-- END CCD CURVE -->
+            <!-- PROB CURVE -->
+
+            <div class="setting-group">
+
+              <div class="setting-title">
+                PROB
+              </div>
+
+              <div class="setting-grid">
+
+                <div class="setting-field">
+                  <label>INIT</label>
+                  <input id="probCurveInit" type="number" value="0" disabled>
+                </div>
+
+                <div class="setting-field">
+                  <label>MID</label>
+                  <input id="probCurveMid" type="number" value="100" disabled>
+                </div>
+
+                <div class="setting-field">
+                  <label>MAX</label>
+                  <input id="probCurveMax" type="number" value="480" disabled>
+                </div>
+
+              </div>
+
+            </div>
+            <!-- END PROB CURVE -->
+
+            <!-- CCE CURVE -->
+
+            <div class="setting-group">
+
+              <div class="setting-title">
+                CCE
+              </div>
+
+              <div class="setting-grid">
+
+                <div class="setting-field">
+                  <label>INIT</label>
+                  <input id="cceCurveInit" type="number" value="9" disabled>
+                </div>
+
+                <div class="setting-field">
+                  <label>MID</label>
+                  <input id="cceCurveMid" type="number" value="100" disabled>
+                </div>
+
+                <div class="setting-field">
+                  <label>MAX</label>
+                  <input id="cceCurveMax" type="number" value="200" disabled>
+                </div>
+
+              </div>
+
+            </div>
+            <!-- END CCE CURVE -->
+
+            <!-- STEPS CURVE -->
+
+            <div class="setting-group">
+
+              <div class="setting-title">
+                STEPS
+              </div>
+
+              <div class="setting-grid">
+
+                <div class="setting-field">
+                  <label>INIT</label>
+                  <input id="stepsCurveInit" type="number" value="120" disabled>
+                </div>
+
+                <div class="setting-field">
+                  <label>MID</label>
+                  <input id="stepsCurveMid" type="number" value="240" disabled>
+                </div>
+
+                <div class="setting-field">
+                  <label>MAX</label>
+                  <input id="stepsCurveMax" type="number" value="480" disabled>
+                </div>
+
+              </div>
+
+            </div>
+            <!-- END STEPS CURVE -->
+
+            <!-- CCF CURVE -->
+
+            <div class="setting-group">
+
+              <div class="setting-title">
+                CCF
+              </div>
+
+              <div class="setting-grid">
+
+                <div class="setting-field">
+                  <label>INIT</label>
+                  <input id="ccfCurveInit" type="number" value="9" disabled>
+                </div>
+
+                <div class="setting-field">
+                  <label>MID</label>
+                  <input id="ccfCurveMid" type="number" value="100" disabled>
+                </div>
+
+                <div class="setting-field">
+                  <label>MAX</label>
+                  <input id="ccfCurveMax" type="number" value="200" disabled>
+                </div>
+
+              </div>
+
+            </div>
+            <!-- END CCF CURVE -->
+            <!-- SCRUB CURVE -->
+
+            <div class="setting-group">
+
+              <div class="setting-title">
+                SCRUB
+              </div>
+
+              <div class="setting-grid">
+
+                <div class="setting-field">
+                  <label>INIT</label>
+                  <input id="scrubCurveInit" type="number" value="120" disabled>
+                </div>
+
+                <div class="setting-field">
+                  <label>MID</label>
+                  <input id="scrubCurveMid" type="number" value="240" disabled>
+                </div>
+
+                <div class="setting-field">
+                  <label>MAX</label>
+                  <input id="scrubCurveMax" type="number" value="480" disabled>
+                </div>
+
+              </div>
+
+            </div>
+            <!-- END SCRUB CURVE -->
+
+            <!-- CCG CURVE -->
+
+            <div class="setting-group">
+
+              <div class="setting-title">
+                CCG
+              </div>
+
+              <div class="setting-grid">
+
+                <div class="setting-field">
+                  <label>INIT</label>
+                  <input id="ccgCurveInit" type="number" value="9" disabled>
+                </div>
+
+                <div class="setting-field">
+                  <label>MID</label>
+                  <input id="ccgCurveMid" type="number" value="100" disabled>
+                </div>
+
+                <div class="setting-field">
+                  <label>MAX</label>
+                  <input id="ccgCurveMax" type="number" value="200" disabled>
+                </div>
+
+              </div>
+
+            </div>
+            <!-- END CCG CURVE -->
+            <!-- CCA CURVE -->
+
+            <div class="setting-group">
+
+              <div class="setting-title">
+                CCA
+              </div>
+
+              <div class="setting-grid">
+
+                <div class="setting-field">
+                  <label>INIT</label>
+                  <input id="ccaCurveInit" type="number" value="9" disabled>
+                </div>
+
+                <div class="setting-field">
+                  <label>MID</label>
+                  <input id="ccaCurveMid" type="number" value="100" disabled>
+                </div>
+
+                <div class="setting-field">
+                  <label>MAX</label>
+                  <input id="ccaCurveMax" type="number" value="200" disabled>
+                </div>
+
+              </div>
+
+            </div>
+            <!-- END CCA CURVE -->
+            <!-- CCH CURVE -->
+
+            <div class="setting-group">
+
+              <div class="setting-title">
+                CCH
+              </div>
+
+              <div class="setting-grid">
+
+                <div class="setting-field">
+                  <label>INIT</label>
+                  <input id="cchCurveInit" type="number" value="9" disabled>
+                </div>
+
+                <div class="setting-field">
+                  <label>MID</label>
+                  <input id="cchCurveMid" type="number" value="100" disabled>
+                </div>
+
+                <div class="setting-field">
+                  <label>MAX</label>
+                  <input id="cchCurveMax" type="number" value="200" disabled>
+                </div>
+
+              </div>
+
+            </div>
+            <!-- END CCH CURVE -->
+
+          </div>
+        </details>
+      </div>
+
+    </section>
+
+
+    <!-- ===================================================== -->
+    <!-- SEQUENCER -->
+    <!-- ===================================================== -->
+
+    <section class="panel">
+
+      <div class="panel-header">
+
+        <strong>SEQUENCER</strong>
+
+        <button class="module-action" id="clearGridBtn">
+
+          RESET
+
+        </button>
+
+      </div>
+
+      <div class="panel-body">
+
+        <div id="g"></div>
+
+      </div>
+
+    </section>
+
+    <!-- ===================================================== -->
+    <!-- GLOBAL-->
+    <!-- ===================================================== -->
+
+    <section class="panel">
+
+      <div class="panel-header">
+        <strong>GLOBAL</strong>
+      </div>
+
+      <div class="panel-body">
+
+        <div class="meter-row">
+
+          <span class="meter-label">
+            OUTPUTS
+          </span>
+
+          <div id="outs"></div>
+
+          <div class="midi-status">
+            <span>MIDI</span>
+            <div id="midiLed" class="midi-led">
+            </div>
+          </div>
+
+        </div>
+        <br><br>
+        <div class="console-label">
+          <strong>CONSOLE</strong>
+        </div>
+
+
+
+        <textarea id="console" readonly>
+    </textarea>
+        <details class="module-settings">
+          <summary>OUTPUT CURVES</summary>
+          <div class="settings-body">
+            <!-- V1 CURVE CURVE -->
+
+            <div class="setting-group">
+
+              <div class="setting-title">
+                V1
+              </div>
+
+              <div class="setting-grid">
+
+                <div class="setting-field">
+                  <label>INIT</label>
+                  <input id="v1CurveInit" type="number" value="9" disabled>
+                </div>
+
+                <div class="setting-field">
+                  <label>MID</label>
+                  <input id="v1CurveMid" type="number" value="100" disabled>
+                </div>
+
+                <div class="setting-field">
+                  <label>MAX</label>
+                  <input id="v1CurveMax" type="number" value="200" disabled>
+                </div>
+
+              </div>
+
+            </div>
+            <!-- END V1 CURVE -->
+            <!-- V2 CURVE -->
+
+            <div class="setting-group">
+
+              <div class="setting-title">
+                V2
+              </div>
+
+              <div class="setting-grid">
+
+                <div class="setting-field">
+                  <label>INIT</label>
+                  <input id="v2CurveInit" type="number" value="9" disabled>
+                </div>
+
+                <div class="setting-field">
+                  <label>MID</label>
+                  <input id="v2CurveMid" type="number" value="100" disabled>
+                </div>
+
+                <div class="setting-field">
+                  <label>MAX</label>
+                  <input id="v2CurveMax" type="number" value="200" disabled>
+                </div>
+
+              </div>
+
+            </div>
+            <!-- END V2 CURVE -->
+            <!-- V3 CURVE CURVE -->
+
+            <div class="setting-group">
+
+              <div class="setting-title">
+                V3
+              </div>
+
+              <div class="setting-grid">
+
+                <div class="setting-field">
+                  <label>INIT</label>
+                  <input id="v3CurveInit" type="number" value="9" disabled>
+                </div>
+
+                <div class="setting-field">
+                  <label>MID</label>
+                  <input id="v3CurveMid" type="number" value="100" disabled>
+                </div>
+
+                <div class="setting-field">
+                  <label>MAX</label>
+                  <input id="v3CurveMax" type="number" value="200" disabled>
+                </div>
+
+              </div>
+
+            </div>
+            <!-- END V3 CURVE -->
+            <!-- V4 CURVE -->
+
+            <div class="setting-group">
+
+              <div class="setting-title">
+                V4
+              </div>
+
+              <div class="setting-grid">
+
+                <div class="setting-field">
+                  <label>INIT</label>
+                  <input id="v4CurveInit" type="number" value="9" disabled>
+                </div>
+
+                <div class="setting-field">
+                  <label>MID</label>
+                  <input id="v4CurveMid" type="number" value="100" disabled>
+                </div>
+
+                <div class="setting-field">
+                  <label>MAX</label>
+                  <input id="v4CurveMax" type="number" value="200" disabled>
+                </div>
+
+              </div>
+
+            </div>
+            <!-- END V4 CURVE -->
+            <!-- V5 CURVE -->
+
+            <div class="setting-group">
+
+              <div class="setting-title">
+                V5
+              </div>
+
+              <div class="setting-grid">
+
+                <div class="setting-field">
+                  <label>INIT</label>
+                  <input id="v5CurveInit" type="number" value="9" disabled>
+                </div>
+
+                <div class="setting-field">
+                  <label>MID</label>
+                  <input id="v5CurveMid" type="number" value="100" disabled>
+                </div>
+
+                <div class="setting-field">
+                  <label>MAX</label>
+                  <input id="v5CurveMax" type="number" value="200" disabled>
+                </div>
+
+              </div>
+
+            </div>
+            <!-- END V5 CURVE -->
+            <!-- V6 CURVE -->
+
+            <div class="setting-group">
+
+              <div class="setting-title">
+                V6
+              </div>
+
+              <div class="setting-grid">
+
+                <div class="setting-field">
+                  <label>INIT</label>
+                  <input id="v6CurveInit" type="number" value="9" disabled>
+                </div>
+
+                <div class="setting-field">
+                  <label>MID</label>
+                  <input id="v6CurveMid" type="number" value="100" disabled>
+                </div>
+
+                <div class="setting-field">
+                  <label>MAX</label>
+                  <input id="v6CurveMax" type="number" value="200" disabled>
+                </div>
+
+              </div>
+
+            </div>
+            <!-- END V6 CURVE -->
+            <!-- V7 CURVE -->
+
+            <div class="setting-group">
+
+              <div class="setting-title">
+                V7
+              </div>
+
+              <div class="setting-grid">
+
+                <div class="setting-field">
+                  <label>INIT</label>
+                  <input id="v7CurveInit" type="number" value="2" disabled>
+                </div>
+
+                <div class="setting-field">
+                  <label>MID</label>
+                  <input id="v7CurveMid" type="number" value="50" disabled>
+                </div>
+
+                <div class="setting-field">
+                  <label>MAX</label>
+                  <input id="v7CurveMax" type="number" value="200" disabled>
+                </div>
+
+              </div>
+
+            </div>
+            <!-- END V7 CURVE -->
+          </div>
+        </details>
+        <details class="module-settings">
+
+          <summary>MIDI MAP</summary>
+
+          <div class="settings-body settings-3col">
+
+            <!-- ======================================== -->
+            <!-- TRANSPORT -->
+            <!-- ======================================== -->
+
+            <div class="setting-group">
+
+              <div class="setting-title">
+                TRANSPORT
+              </div>
+
+              <table class="resource-table">
+
+                <tr>
+                  <th>FUNCTION</th>
+                  <th>NOTE</th>
+                  <th>IR</th>
+                </tr>
+
+                <tr>
+                  <td>PLAY</td>
+                  <td><input id="midiPlayNote" type="number" value="60" disabled></td>
+                  <td><input id="irBankTrans1" type="text" value="0x00" disabled></td>
+                </tr>
+
+                <tr>
+                  <td>STOP</td>
+                  <td><input id="midiStopNote" type="number" value="61" disabled></td>
+                  <td><input id="irBankTrans2" type="text" value="0x00" disabled></td>
+                </tr>
+
+                <tr>
+                  <td>RECORD</td>
+                  <td><input id="midiRecordNote" type="number" value="62" disabled></td>
+                  <td><input id="irBankTrans3" type="text" value="0x00" disabled></td>
+                </tr>
+
+                <tr>
+                  <td>OVERWRITE</td>
+                  <td><input id="midiOverwriteNote" type="number" value="63" disabled></td>
+                  <td><input id="irBankTrans4" type="text" value="0x00" disabled></td>
+                </tr>
+
+              </table>
+
+              <br>
+
+              <table class="resource-table">
+                <tbody>
+                  <tr>
+                    <th>MISC</th>
+                    <th>NOTE</th>
+                    <th>IR</th>
+                  </tr>
+
+                  <tr>
+                    <td>TEMPO ONTIME SYNC</td>
+                    <td>
+                      <input id="midiTempoOntimeSyncNote" type="number" value="0" disabled>
+                    </td>
+                    <td><input id="irBankTrans5" type="text" value="0x00" disabled></td>
+                  </tr>
+                  <tr>
+                    <td>RESET</td>
+                    <td>
+                      <input id="midiResetNote" type="number" value="1" disabled>
+                    </td>
+                    <td><input id="irBankTrans6" type="text" value="0x00" disabled></td>
+                  </tr>
+                </tbody>
+
+              </table>
+
+            </div>
+
+            <!-- ======================================== -->
+            <!-- BANKS -->
+            <!-- ======================================== -->
+
+            <div class="setting-group">
+
+              <div class="setting-title">
+                BANKS
+              </div>
+
+              <table class="resource-table">
+
+                <tr>
+                  <th>BANK</th>
+                  <th>NOTE</th>
+                  <th>IR</th>
+                </tr>
+
+                <tr>
+                  <td>1</td>
+                  <td><input id="midiBank1Note" type="number" value="36" disabled></td>
+                  <td><input id="irBank1" type="text" value="0x00" disabled></td>
+                </tr>
+                <tr>
+                  <td>2</td>
+                  <td><input id="midiBank2Note" type="number" value="37" disabled></td>
+                  <td><input id="irBank2" type="text" value="0x00" disabled></td>
+                </tr>
+                <tr>
+                  <td>3</td>
+                  <td><input id="midiBank3Note" type="number" value="38" disabled></td>
+                  <td><input id="irBank3" type="text" value="0x00" disabled></td>
+                </tr>
+                <tr>
+                  <td>4</td>
+                  <td><input id="midiBank4Note" type="number" value="39" disabled></td>
+                  <td><input id="irBank4" type="text" value="0x00" disabled></td>
+                </tr>
+
+                <tr>
+                  <td>5</td>
+                  <td><input id="midiBank5Note" type="number" value="40" disabled></td>
+                  <td><input id="irBank5" type="text" value="0x00" disabled></td>
+                </tr>
+                <tr>
+                  <td>6</td>
+                  <td><input id="midiBank6Note" type="number" value="41" disabled></td>
+                  <td><input id="irBank6" type="text" value="0x00" disabled></td>
+                </tr>
+                <tr>
+                  <td>7</td>
+                  <td><input id="midiBank7Note" type="number" value="42" disabled></td>
+                  <td><input id="irBank7" type="text" value="0x00" disabled></td>
+                </tr>
+                <tr>
+                  <td>8</td>
+                  <td><input id="midiBank8Note" type="number" value="43" disabled></td>
+                  <td><input id="irBank8" type="text" value="0x00" disabled></td>
+                </tr>
+
+                <tr>
+                  <td>9</td>
+                  <td><input id="midiBank9Note" type="number" value="44" disabled></td>
+                  <td><input id="irBank9" type="text" value="0x00" disabled></td>
+                </tr>
+                <tr>
+                  <td>10</td>
+                  <td><input id="midiBank10Note" type="number" value="45" disabled></td>
+                  <td><input id="irBank10" type="text" value="0x00" disabled></td>
+                </tr>
+                <tr>
+                  <td>11</td>
+                  <td><input id="midiBank11Note" type="number" value="46" disabled></td>
+                  <td><input id="irBank11" type="text" value="0x00" disabled></td>
+                </tr>
+                <tr>
+                  <td>12</td>
+                  <td><input id="midiBank12Note" type="number" value="47" disabled></td>
+                  <td><input id="irBank12" type="text" value="0x00" disabled></td>
+                </tr>
+
+                <tr>
+                  <td>13</td>
+                  <td><input id="midiBank13Note" type="number" value="48" disabled></td>
+                  <td><input id="irBank13" type="text" value="0x00" disabled></td>
+                </tr>
+                <tr>
+                  <td>14</td>
+                  <td><input id="midiBank14Note" type="number" value="49" disabled></td>
+                  <td><input id="irBank14" type="text" value="0x00" disabled></td>
+                </tr>
+                <tr>
+                  <td>15</td>
+                  <td><input id="midiBank15Note" type="number" value="50" disabled></td>
+                  <td><input id="irBank15" type="text" value="0x00" disabled></td>
+                </tr>
+                <tr>
+                  <td>16</td>
+                  <td><input id="midiBank16Note" type="number" value="51" disabled></td>
+                  <td><input id="irBank16" type="text" value="0x00" disabled></td>
+                </tr>
+
+              </table>
+
+            </div>
+
+            <!-- ======================================== -->
+            <!-- PARAMETERS -->
+            <!-- ======================================== -->
+
+            <div class="setting-group">
+
+              <div class="setting-title">
+                PARAMETERS
+              </div>
+
+              <table class="resource-table">
+                <tbody>
+
+                  <tr>
+                    <th>PARAM</th>
+                    <th>CC</th>
+                  </tr>
+
+                  <tr>
+                    <td>BPM</td>
+                    <td><input id="midiBpmCc" type="number" value="10" disabled></td>
+                  </tr>
+                  <tr>
+                    <td>ONTIME</td>
+                    <td><input id="midiOntimeCc" type="number" value="11" disabled></td>
+                  </tr>
+                  <tr>
+                    <td>DRUNK</td>
+                    <td><input id="midiDrunkCc" type="number" value="12" disabled></td>
+                  </tr>
+                  <tr>
+                    <td>PROB</td>
+                    <td><input id="midiProbCc" type="number" value="13" disabled></td>
+                  </tr>
+                  <tr>
+                    <td>STEPS</td>
+                    <td><input id="midiStepsCc" type="number" value="14" disabled></td>
+                  </tr>
+                  <tr>
+                    <td>SCRUB</td>
+                    <td><input id="midiScrubCc" type="number" value="15" disabled></td>
+                  </tr>
+
+                  <tr>
+                    <td>CCA</td>
+                    <td><input id="midiCcaCc" type="number" value="20" disabled></td>
+                  </tr>
+                  <tr>
+                    <td>CCB</td>
+                    <td><input id="midiCcbCc" type="number" value="21" disabled></td>
+                  </tr>
+                  <tr>
+                    <td>CCC</td>
+                    <td><input id="midiCccCc" type="number" value="22" disabled></td>
+                  </tr>
+                  <tr>
+                    <td>CCD</td>
+                    <td><input id="midiCcdCc" type="number" value="23" disabled></td>
+                  </tr>
+                  <tr>
+                    <td>CCE</td>
+                    <td><input id="midiCceCc" type="number" value="24" disabled></td>
+                  </tr>
+                  <tr>
+                    <td>CCF</td>
+                    <td><input id="midiCcfCc" type="number" value="25" disabled></td>
+                  </tr>
+                  <tr>
+                    <td>CCG</td>
+                    <td><input id="midiCcgCc" type="number" value="26" disabled></td>
+                  </tr>
+                  <tr>
+                    <td>CCH</td>
+                    <td><input id="midiCchCc" type="number" value="27" disabled></td>
+                  </tr>
+
+                </tbody>
+              </table>
+
+            </div>
+
+          </div>
+
+        </details>
+        <details class="module-settings">
+
+          <summary>PIN MAP</summary>
+
+          <div class="settings-body settings-3col">
+
+            <div class="setting-group">
+
+              <div class="setting-title">
+                OUTPUT PINS
+              </div>
+
+              <table class="resource-table">
+                <tbody>
+                  <tr>
+                    <th>OUT</th>
+                    <th>GPIO</th>
+                  </tr>
+
+                  <tr>
+                    <td>V1</td>
+                    <td><input id="pinOut1" type="number" value="1" disabled></td>
+                  </tr>
+                  <tr>
+                    <td>V2</td>
+                    <td><input id="pinOut2" type="number" value="2" disabled></td>
+                  </tr>
+                  <tr>
+                    <td>V3</td>
+                    <td><input id="pinOut3" type="number" value="8" disabled></td>
+                  </tr>
+                  <tr>
+                    <td>V4</td>
+                    <td><input id="pinOut4" type="number" value="9" disabled></td>
+                  </tr>
+                  <tr>
+                    <td>V5</td>
+                    <td><input id="pinOut5" type="number" value="10" disabled></td>
+                  </tr>
+                  <tr>
+                    <td>V6</td>
+                    <td><input id="pinOut6" type="number" value="11" disabled></td>
+                  </tr>
+                  <tr>
+                    <td>V7</td>
+                    <td><input id="pinOut7" type="number" value="12" disabled></td>
+                  </tr>
+                </tbody>
+              </table>
+
+            </div>
+
+            <div class="setting-group">
+
+              <div class="setting-title">
+                TFT PINS
+              </div>
+
+              <table class="resource-table">
+                <tbody>
+                  <tr>
+                    <th>PIN</th>
+                    <th>GPIO</th>
+                  </tr>
+
+                  <tr>
+                    <td>CS</td>
+                    <td><input id="pinTftCs" type="number" value="15" disabled></td>
+                  </tr>
+                  <tr>
+                    <td>RST</td>
+                    <td><input id="pinTftRst" type="number" value="6" disabled></td>
+                  </tr>
+                  <tr>
+                    <td>DC</td>
+                    <td><input id="pinTftDc" type="number" value="7" disabled></td>
+                  </tr>
+                  <tr>
+                    <td>SCLK</td>
+                    <td><input id="pinTftSclk" type="number" value="4" disabled></td>
+                  </tr>
+                  <tr>
+                    <td>MOSI</td>
+                    <td><input id="pinTftMosi" type="number" value="5" disabled></td>
+                  </tr>
+                </tbody>
+              </table>
+
+            </div>
+
+            <div class="setting-group">
+
+              <div class="setting-title">
+                DIGITAL IO PINS
+              </div>
+
+              <table class="resource-table">
+                <tbody>
+                  <tr>
+                    <th>ITEM</th>
+                    <th>GPIO</th>
+                  </tr>
+
+                  <tr>
+                    <td>IR</td>
+                    <td><input id="pinIrSensor" type="number" value="16" disabled></td>
+                  </tr>
+                  <tr>
+                    <td>RGB LED</td>
+                    <td><input id="pinRgbLed" type="number" value="48" disabled></td>
+                  </tr>
+                </tbody>
+              </table>
+
+            </div>
+
+          </div>
+
+        </details>
+
+      </div>
+
+    </section>
+
+
+    <script src="app.js"></script>
   </div>
-
-</details>
-<details class="module-settings">
-
-  <summary>PIN MAP</summary>
-
-  <div class="settings-body settings-3col">
-
-    <div class="setting-group">
-
-      <div class="setting-title">
-        OUTPUT PINS
-      </div>
-
-      <table class="resource-table">
-        <tr><th>OUT</th><th>GPIO</th></tr>
-
-        <tr><td>V1</td><td><input id="pinOut1" type="number" value="1" disabled></td></tr>
-        <tr><td>V2</td><td><input id="pinOut2" type="number" value="2" disabled></td></tr>
-        <tr><td>V3</td><td><input id="pinOut3" type="number" value="8" disabled></td></tr>
-        <tr><td>V4</td><td><input id="pinOut4" type="number" value="9" disabled></td></tr>
-        <tr><td>V5</td><td><input id="pinOut5" type="number" value="10" disabled></td></tr>
-        <tr><td>V6</td><td><input id="pinOut6" type="number" value="11" disabled></td></tr>
-        <tr><td>V7</td><td><input id="pinOut7" type="number" value="12" disabled></td></tr>
-      </table>
-
-    </div>
-
-    <div class="setting-group">
-
-      <div class="setting-title">
-        TFT PINS
-      </div>
-
-      <table class="resource-table">
-        <tr><th>PIN</th><th>GPIO</th></tr>
-
-        <tr><td>CS</td><td><input id="pinTftCs" type="number" value="15" disabled></td></tr>
-        <tr><td>RST</td><td><input id="pinTftRst" type="number" value="6" disabled></td></tr>
-        <tr><td>DC</td><td><input id="pinTftDc" type="number" value="7" disabled></td></tr>
-        <tr><td>SCLK</td><td><input id="pinTftSclk" type="number" value="4" disabled></td></tr>
-        <tr><td>MOSI</td><td><input id="pinTftMosi" type="number" value="5" disabled></td></tr>
-      </table>
-
-    </div>
-
-    <div class="setting-group">
-
-      <div class="setting-title">
-        DIGITAL IO PINS
-      </div>
-
-      <table class="resource-table">
-        <tr><th>ITEM</th><th>GPIO</th></tr>
-
-        <tr><td>IR</td><td><input id="pinIrSensor" type="number" value="16" disabled></td></tr>
-        <tr><td>RGB LED</td><td><input id="pinRgbLed" type="number" value="48" disabled></td></tr>
-      </table>
-
-    </div>
-
-  </div>
-
-</details>
-
-  </div>
-
-</section>
-
-
-<script src="app.js"></script>
-</div>
 </body>
+
 </html>
