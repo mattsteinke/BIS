@@ -111,7 +111,7 @@ void onWebSocketEvent(uint8_t num, WStype_t type, uint8_t* payload, size_t) {
     }
     if (banks[bankId].hasData) {
       recallBank(bankId);
-      broadcastFullState();
+      //broadcastFullState();
     } else {
       logMessage("BANK" + String(bankId) + " NOT FOUND");
     }

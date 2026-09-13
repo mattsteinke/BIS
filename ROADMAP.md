@@ -1,298 +1,627 @@
-# BIS Roadmap
+BIS V15 PHASE 2 - SETTINGS PERSISTENCE IMPLEMENTATION SPECIFICATION
 
-This document tracks planned development for the Behavioral Instrument System (BIS).
+Context
 
-The goal is to prioritize practical improvements that make BIS more reliable,
-usable, and maintainable while evolving toward a modular behavioral instrument architecture.
+BIS runs on:
 
----
+- ESP32-S3
+- PlatformIO
+- Arduino Framework
+- LittleFS
+- WebSockets
 
-# Current Stable Version
+The settings architecture foundation already exists and compiles successfully.
 
-## V14
+Current files:
 
-Completed:
+include/
+    bis_settings.h
 
-- ESP32-S3 PlatformIO firmware
-- WebSocket control system
-- Browser-hosted UI
-- 7-track sequencer
-- 16 performance banks
-- Parameter recording
-- Parameter playback
-- Persistent bank storage
-- Browser state synchronization
-- LittleFS web hosting
-- Separate:
-  - index.html
-  - style.css
-  - app.js
+src/
+    bis_settings.cpp
 
----
+Current structures:
 
-# Current Development
+struct Curve
+struct ParameterCurves
+struct BISSettings
 
-## V15 Phase 1 ✅ Complete
+Global object:
 
-### Configuration Architecture
+extern BISSettings bisSettings;
 
-Implemented:
+=====================================================
+IMPORTANT PERFORMANCE DISCOVERY
+=====================================================
 
-- Parameter Curves architecture
-- Voice Curves architecture
-- MIDI Map architecture
-- Pin Map architecture
-- Global module architecture
-- Theme variable system
-- Responsive panel-based UI
-- Configuration control naming system
+Bank switching originally caused audible musical stuttering.
 
-### Current Interface
+Investigation determined:
 
-BANKS & TRANSPORT
+NOT:
+- LittleFS
+- Bank recall
+- RAM copies
 
-PARAMETERS
-    ▼ PARAMETER CURVES
-    ▼ VOICE CURVES
+WAS:
+- excessive websocket traffic
 
-SEQUENCER
+Specifically:
 
-GLOBAL
-    OUTPUTS
-    MIDI
-    CONSOLE
+broadcastFullState()
 
-    ▼ MIDI MAP
-    ▼ PIN MAP
+during bank recall.
 
-Status:
+broadcastFullState() transmits:
 
-Architecture complete.
-Runtime integration pending.
+CFG:
+RNG:
+P:
+BANKS:
 
----
+plus approximately:
 
-## V15 Phase 2
+175 grid updates
 
-### Settings Persistence
+Removing broadcastFullState() from the bank recall path eliminated the musical pause.
 
-Priority: High
+ARCHITECTURAL RULE
 
-Goal:
+REAL-TIME MUSICAL TIMING ALWAYS HAS PRIORITY OVER UI SYNCHRONIZATION.
 
-Connect existing configuration architecture to runtime storage.
+Future settings work must not introduce timing stalls.
 
-Features:
+It is acceptable for UI updates to be delayed.
 
-- LittleFS settings persistence
-- Curve settings persistence
-- MIDI map persistence
-- Pin map persistence
-- System settings persistence
+It is NOT acceptable for musical timing to be delayed.
 
-Success Criteria:
+Settings synchronization must never interfere with:
 
-- Settings survive reboot
-- Settings restore automatically
-- Existing workflow preserved
+- bank recall
+- playback
+- trigger generation
+- scheduler timing
 
----
+=====================================================
+OWNERSHIP RULES
+=====================================================
 
-## V15 Phase 3
+Bank persistence belongs to:
 
-### Runtime Integration
+bis_banks.*
 
-Priority: High
+Settings persistence belongs to:
 
-Goal:
+bis_settings.*
 
-Connect UI configuration to actual runtime behavior.
+Do not place settings persistence logic inside:
 
-Features:
+- bis_banks.cpp
+- bis_web.cpp
+- main.cpp
 
-- Parameter curve evaluation
-- Voice curve evaluation
-- MIDI mapping runtime behavior
-- Pin assignment runtime behavior
+except for calling public APIs.
 
-Success Criteria:
+=====================================================
+SETTINGS FILE
+=====================================================
 
-- Curve values affect behavior
-- MIDI mappings function
-- Pin assignments function
-- Existing performance system remains stable
+Use a single settings file:
 
----
+/settings.bin
 
-## V15 Phase 4
+Do not create:
 
-### Theme and Appearance
+parameterCurves.bin
+outputCurves.bin
+midiMap.bin
+pinMap.bin
 
-Priority: Medium
+The system should use one persistent settings object.
 
-Goal:
+=====================================================
+SETTINGS VERSIONING
+=====================================================
 
-Allow UI customization without affecting instrument behavior.
+Add explicit versioning now.
 
-Features:
+Example:
 
-- Theme Hue control
-- Theme Presets
+constexpr uint16_t SETTINGS_VERSION = 1;
 
-Presets:
+BISSettings should contain:
 
-- Blue
-- Green
-- Purple
-- Amber
-- Monochrome
+uint16_t version;
 
-Future:
+Example:
 
-- User theme presets
-- Theme import/export
+struct BISSettings {
 
-Success Criteria:
+    uint16_t version;
 
-- Preserve color relationships
-- Runtime theme switching
-- No firmware dependency
+    ParameterCurves parameterCurves;
 
----
+    // Future:
+    //
+    // OutputCurves outputCurves;
+    // MidiMap midiMap;
+    // IRMap irMap;
+    // PinMap pinMap;
+    // SystemSettings system;
+};
 
-# Future Releases
+Loading behavior:
 
-## Browser Composer
+If:
 
-Planned
+settings.version != SETTINGS_VERSION
 
-Potential Features:
+Then:
 
-- JSON configuration import/export
-- Preset management
-- Multi-view layouts
-- Touch-first layouts
-- Accessibility improvements
-- Multi-device support
+loadDefaultSettings()
 
----
+and report:
 
-## Behavior System
+SETTINGS VERSION MISMATCH
 
-Planned
+This will prevent future compatibility problems.
 
-Potential Features:
+=====================================================
+CURRENT DATA MODEL
+=====================================================
 
-- Behaviors
-- Gestures
-- Behavior routing
-- Behavior recording
-- Behavior transformation
+struct Curve {
 
----
+    uint16_t init;
+    uint16_t mid;
+    uint16_t max;
+};
 
-## Scene System
+struct ParameterCurves {
 
-Planned
+    Curve bpm;
+    Curve ontime;
 
-Potential Features:
+    Curve drunk;
+    Curve prob;
 
-- Scene management
-- Scene transitions
-- Scene recall
-- Scene layering
+    Curve steps;
+    Curve scrub;
 
----
+    Curve cca;
+    Curve ccb;
+    Curve ccc;
+    Curve ccd;
+    Curve cce;
+    Curve ccf;
+    Curve ccg;
+    Curve cch;
+};
 
-## Score System
+struct BISSettings {
 
-Planned
+    uint16_t version;
 
-Potential Features:
+    ParameterCurves parameterCurves;
 
-- Multi-scene performances
-- Performance timelines
-- Automated transitions
-- Behavioral scores
+    // future expansion
+};
 
----
+extern BISSettings bisSettings;
 
-## Voice Architecture
+=====================================================
+PUBLIC API
+=====================================================
 
-Planned
+bis_settings.h should expose:
 
-Potential Features:
+void loadDefaultSettings();
 
-- Voice abstraction
-- Voice-specific curves
-- Capability mapping
-- Voice calibration
-- Voice grouping
-- Voice templates
+bool loadSettings();
 
----
+bool saveSettings();
 
-## Visualization
+bool settingsFileExists();
 
-Planned
+=====================================================
+STARTUP SEQUENCE
+=====================================================
 
-Potential Features:
+Official initialization order:
 
-- TFT Animation Module
-- Enhanced visual feedback
-- Visualization editor
-- Animation development tools
+setup()
 
----
+↓
 
-## Performance Integration
+initBankStorage()
 
-Planned
+↓
 
-Potential Features:
+loadBanksFromStorage()
 
-- Web MIDI
-- External controller integration
-- Expanded performance workflows
+↓
 
----
+loadSettings()
 
-# Long-Term Architecture
+↓
 
-Future runtime evolution:
+start web server
 
-- Voice Manager
-- Routing Engine
-- Parameter Engine
-- Browser Composer
-- Extended performance systems
+↓
 
----
+start websocket
 
-# Design Principles
+Settings should always load before any browser can connect.
 
-When developing BIS:
+=====================================================
+PHASE 2A
+SETTINGS FOUNDATION
+=====================================================
 
-- Preserve existing functionality.
-- Prefer small, testable changes.
-- Use non-blocking code.
-- Use millis()-based timing.
-- Maintain PlatformIO compatibility.
-- Prioritize artist workflow over architectural purity.
-- Favor reliability over cleverness.
-- Keep configuration separate from performance.
-- Keep modules self-contained.
+Task 1
 
----
+Implement loadDefaultSettings().
 
-# Development Workflow
+Move all parameter curve defaults from HTML into firmware.
 
-1. Define feature.
-2. Create implementation plan.
-3. Implement minimally.
-4. Test locally.
-5. Test on ESP32 hardware.
-6. Commit.
-7. Push to GitHub.
-8. Update CHANGELOG.md.
-9. Update ROADMAP.md when milestones change.
+Firmware becomes the source of truth.
+
+HTML values become placeholders only.
+
+The browser must never be considered the source of truth.
+
+Current values exist in HTML:
+
+bpmCurveInit
+bpmCurveMid
+bpmCurveMax
+
+ontimeCurveInit
+ontimeCurveMid
+ontimeCurveMax
+
+...
+
+cchCurveInit
+cchCurveMid
+cchCurveMax
+
+Populate every parameter curve in:
+
+loadDefaultSettings()
+
+=====================================================
+Task 2
+=====================================================
+
+Implement:
+
+settingsFileExists()
+
+Use:
+
+/settings.bin
+
+=====================================================
+Task 3
+=====================================================
+
+Implement:
+
+loadSettings()
+
+Loading behavior:
+
+IF:
+
+settings.bin exists
+
+AND
+
+version matches
+
+THEN:
+
+load BISSettings
+
+ELSE:
+
+loadDefaultSettings()
+
+Expected logs:
+
+SETTINGS FILE FOUND
+SETTINGS FILE LOADED
+
+or
+
+SETTINGS VERSION MISMATCH
+SETTINGS DEFAULTS LOADED
+
+or
+
+SETTINGS FILE NOT FOUND
+SETTINGS DEFAULTS LOADED
+
+=====================================================
+Task 4
+=====================================================
+
+Implement:
+
+saveSettings()
+
+Use LittleFS.
+
+Store entire:
+
+BISSettings
+
+as binary.
+
+Follow the same persistence style already used by bank persistence.
+
+No JSON.
+
+=====================================================
+LOGGING
+=====================================================
+
+Use the existing logMessage() pattern.
+
+Expected log messages:
+
+SETTINGS FILE FOUND
+
+SETTINGS FILE LOADED
+
+SETTINGS FILE CREATED
+
+SETTINGS FILE SAVED
+
+SETTINGS FILE NOT FOUND
+
+SETTINGS DEFAULTS LOADED
+
+SETTINGS VERSION MISMATCH
+
+=====================================================
+PHASE 2B
+READ-ONLY UI POPULATION
+=====================================================
+
+Goal
+
+Display firmware-owned settings in browser.
+
+No editing.
+
+Controls remain disabled.
+
+=====================================================
+Task 5
+=====================================================
+
+Add websocket message:
+
+CURVES:
+
+This message is responsible for transmitting all parameter curve values.
+
+Do not use JSON.
+
+Use BIS message style.
+
+=====================================================
+CURVES MESSAGE FORMAT
+=====================================================
+
+Use an explicit named format.
+
+Example:
+
+CURVES:
+BPM:120:240:480
+ONTIME:10:100:1000
+DRUNK:0:50:100
+PROB:0:50:100
+STEPS:1:12:25
+SCRUB:0:12:24
+CCA:9:100:200
+...
+CCH:9:100:200
+
+The protocol must be human-readable and debuggable.
+
+Avoid anonymous positional payloads.
+
+=====================================================
+Task 6
+=====================================================
+
+Browser receives:
+
+CURVES:
+
+Populate:
+
+bpmCurveInit
+bpmCurveMid
+bpmCurveMax
+
+ontimeCurveInit
+ontimeCurveMid
+ontimeCurveMax
+
+...
+
+cchCurveInit
+cchCurveMid
+cchCurveMax
+
+Result:
+
+Firmware values appear in browser.
+
+Browser remains read-only.
+
+=====================================================
+CURVES TRANSMISSION RULE
+=====================================================
+
+CURVES:
+
+should only be sent:
+
+- on client connect
+- after loadSettings()
+
+Do not continuously broadcast CURVES.
+
+Do not send CURVES during playback.
+
+=====================================================
+PHASE 2C
+EDITING AND SAVING
+=====================================================
+
+Goal
+
+Enable editing.
+
+=====================================================
+Task 7
+=====================================================
+
+Remove disabled attribute from:
+
+Parameter Curves only.
+
+Do not enable:
+
+- Output Curves
+- MIDI Map
+- IR Map
+- Pin Map
+
+=====================================================
+Task 8
+=====================================================
+
+Add:
+
+SAVE CURVES
+
+button.
+
+=====================================================
+SAVE STRATEGY
+=====================================================
+
+Do NOT autosave.
+
+Do NOT save after every field edit.
+
+Settings are saved only when:
+
+SAVE CURVES
+
+is pressed.
+
+Reason:
+
+Avoid unnecessary flash writes.
+
+=====================================================
+Task 9
+=====================================================
+
+Create browser → firmware update message.
+
+Possible:
+
+SETCURVES:
+
+or similar.
+
+Update:
+
+bisSettings.parameterCurves
+
+in RAM.
+
+=====================================================
+Task 10
+=====================================================
+
+Call:
+
+saveSettings()
+
+after successful validation and SAVE CURVES action.
+
+Persist to:
+
+/settings.bin
+
+=====================================================
+FUTURE EXPANSION
+=====================================================
+
+Curve is a core BIS primitive.
+
+Future systems should reuse:
+
+struct Curve {
+    init
+    mid
+    max
+};
+
+Planned future settings:
+
+OutputCurves
+
+MidiMap
+
+IRMap
+
+PinMap
+
+SystemSettings
+
+All future settings should become members of:
+
+BISSettings
+
+All future settings should persist through:
+
+/settings.bin
+
+using the same architecture.
+
+=====================================================
+PERFORMANCE REQUIREMENTS
+=====================================================
+
+Do not reintroduce:
+
+broadcastFullState()
+
+during bank recall.
+
+Do not send large websocket floods during:
+
+- bank recall
+- playback
+- scheduler execution
+
+Future settings synchronization must use lightweight messages.
+
+Console logging may be batched or throttled in the future.
+
+Musical timing always wins over UI synchronization.
+
+Implement incrementally.
+
+Compile and test on real ESP32 hardware after each milestone before proceeding to the next phase.

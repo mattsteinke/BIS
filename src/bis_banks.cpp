@@ -204,7 +204,8 @@ void recallBank(uint8_t bankId) {
   bis.playing = true;
   isBankPlaying = true;
   bankPlaybackStart = millis();
-  lastStep = 0;
+  //lastStep = 0;
+  lastStep = millis() - bis.intervalMs;
 
   logMessage("BANK" + String(bankId) + " LOADED");
   logMessage("RECALL BANK " + String(bankId + 1));
